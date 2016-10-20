@@ -1,5 +1,15 @@
-
-
+* {
+  margin: 0;
+  padding: 0;
+}
 
 $gryffindor-red: #941B08;
 $gryffindor-gold: #D8B33B;
+$nav-resting-grey: #e6e7e8;
+
+$breakpoints: (
+  'small':    480px,
+  'medium':   720px,
+  'large':    960px,
+  'x-large':  1280px
+);
