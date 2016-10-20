@@ -5,11 +5,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     style: 'compressed',
-                    loadPath: [
-                        'node_modules/bourbon/app/assets/stylesheets',
-                        'node_modules/bourbon-neat/app/assets/stylesheets'
-
-                    ]
+                    loadPath: require('bourbon').includePaths
                 },
                 files: {
                     'app/assets/stylesheets/main.min.css': 'app/assets/stylesheets/sass/main.scss'
