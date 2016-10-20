@@ -1,4 +1,11 @@
-
+$image-path: '../images/';
+$font-path: '../fonts/';
+$hogwarts-boats: url($image-path + 'hogwarts-boats.jpg');
+$hogwarts-gray: #100E1B;
+$hogwarts-gold: rgb(100,100,0);
+$subtle-background: url($image-path + 'subtle-noise.png');
+$default-radius: 5px;
+$large-radius: 20px;
 
 $gryffindor-red: #941B08;
 $gryffindor-gold: #D8B33B;

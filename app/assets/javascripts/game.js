@@ -287,6 +287,11 @@ var potterQuest = (function() {
   harry.create(game);
   game.addCharacter(harry);
 
+  // Canvas testing
+  var canvas = $('#game-canvas');
+  var context = canvas.getContext('2d');
+
+
   return {
     game: game
   }
