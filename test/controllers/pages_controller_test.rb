@@ -20,5 +20,4 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get game_path
     assert_response :success
   end
-
 end
