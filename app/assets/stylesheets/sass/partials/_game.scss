@@ -1,11 +1,3 @@
-$image-path: '../images/';
-$font-path: '../fonts/';
-$hogwarts-boats: url($image-path + 'hogwarts-boats.jpg');
-$hogwarts-gray: #100E1B;
-$hogwarts-gold: rgb(100,100,0);
-$subtle-background: url($image-path + 'subtle-noise.png');
-$default-radius: 5px;
-$large-radius: 20px;
 @font-face {
   font-family: Potter;
   src: url($font-path + 'HARRYP__.TTF');
@@ -61,4 +53,12 @@ section {
     border-radius: $large-radius;
     outline-style: none;
   }
+}
+
+#game-canvas {
+  background: white;
+  border: 6px solid black;
+  border-radius: $default-radius;
+  box-shadow: 10px 10px 50px white;
+  overflow: hidden;
 }
