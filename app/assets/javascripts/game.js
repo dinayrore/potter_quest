@@ -1,7 +1,8 @@
 var potterQuest = (function() {
   var backgrounds = {
     initBackground: '../../assets/images/subtle-noise.png',
-    welcomeBackground: '../../assets/images/game_title.png'
+    welcomeBackground: '../../assets/images/game_title.png',
+    fullBackground: '../../assets/images/background-sprite.png'
   }
 
   var avatars = {
@@ -69,7 +70,7 @@ var potterQuest = (function() {
 
   Game.prototype.runCastle = function() {
     $(this.elem).css({
-      'background-image': 'url(' + backgrounds.welcomeBackground + ')',
+      'background-image': 'url(' + backgrounds.fullBackground + ')',
       'background-size': '100% 100%'
     });
   }
@@ -288,9 +289,13 @@ var potterQuest = (function() {
   game.addCharacter(harry);
 
   // Canvas testing
-  var canvas = $('#game-canvas');
-  var context = canvas.getContext('2d');
 
+  window.onload = function() {
+    var canvas = $('#game-canvas')[0];
+    var context = canvas.getContext('2d');
+    var img = $('.full-background')[0];
+    context.drawImage(img, -100, -900, 6500, 4500);
+  };
 
   return {
     game: game
