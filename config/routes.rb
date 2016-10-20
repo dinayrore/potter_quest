@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
   root 'static_pages#login'
   get  '/profile', to: 'static_pages#profile'
   get  '/leaderboard', to: 'static_pages#leaderboard'
