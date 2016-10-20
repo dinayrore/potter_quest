@@ -1,2 +1,37 @@
-%h1 Users#new
-%p Find me in app/views/users/new.html.haml
+!!! 5
+%html(lang='en')
+  %head
+    %meta(charset='UTF-8')
+    %meta(content="width=device-width, initial-scale=1" name="viewport")
+    %title Sorting
+    %link(rel="shortcut icon" href="images/favicon.ico" type="image/x-icon")
+    %link(rel="icon" href="images/favicon.ico" type="image/x-icon")
+    %link(rel="stylesheet" href="../../assets/stylesheets/main.min.css")
+  %body
+    %main
+      %section#login-page
+        .form-wrap
+          .tabs
+            %h3.signup-tab
+              %a.active{:href =>"signup-tab-content"} Sign Up
+            %h3.login-tab
+              %a{:href => "login-tab-content"} Login
+          .tabs-content
+            #signup-tab-content.active
+              %form.signup-form{:action => "", :method => "POST"}
+                %input.input#user_email{:type => "email", :autocomplete => "off", :placeholder => "Email"}
+                %input.input#user_name{:type => "text", :autocomplete => "off", :placeholder => "Username"}
+                %input.input#user_pass{:type => "password", :autocomplete => "off", :placeholder => "Password"}
+                %input.button{:type => "submit", :value => "Sign Up"}
+              .help-text
+                %p Don't worry, the Sorting Hat will choose your house later!
+            #login-tab-content
+              %form.login-form{:action => "", :method => "POST"}
+              %input.input#user_login{:type => "text", :autocomplete => "off", :placeholder => "Email or Username"}
+              %input.input#user_pass{:type => "password", :autocomplete => "off", :placeholder => "Password"}
+              %input.button{:type => "submit", :value => "Login"}
+              .help-text
+                %p Welcome back to Hogwart's!
+    %script(src="../../assets/javascripts/vendor.min.js")
+    %script(src="../../assets/javascripts/login.js")%h1 StaticPages#login
+%p Find me in app/views/pages/login.html.haml
