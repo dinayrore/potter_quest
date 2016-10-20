@@ -1,6 +1,12 @@
 console.log("This is the login js file.");
 
+
+
+
+
 $(document).ready(function() {
+
+
 	var tab = $('.tabs h3 a');
 
 	tab.on('click', function(event) {
