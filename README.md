@@ -31,9 +31,9 @@ Install ruby 2.3.1 - or latest version of Ruby
 Once you have completed the above installation processes your system should be ready to launch the program!
 
 Install Rails 5 - or latest version
-``
+```
 gem install rails --version=5.0.0.1
-``
+```
 
 Download postgresql
   1. Go to http://postgresapp.com/
