@@ -1,6 +1,6 @@
 require 'test_helper'
 #
-class StaticPagesControllerTest < ActionDispatch::IntegrationTest
+class PagesControllerTest < ActionDispatch::IntegrationTest
   test 'should get root' do
     get root_path
     assert_response :success
