@@ -13,7 +13,7 @@ $(document).ready(function() {
 		$(this).addClass('active');
 		console.log(this);
 
-		var tab_content = $(this).attr('href');
+		var tab_content = $(this).attr('id');
 		$('div[id$="tab-content"]').removeClass('active');
 		$('div#' + tab_content).addClass('active');
 	});
