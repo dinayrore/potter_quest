@@ -6,7 +6,6 @@ $nav-resting-grey: #e6e7e8;
 $hogwarts-gray: #100E1B;
 
 #login-page {
-  
 
     * {
         margin: 0;
@@ -30,7 +29,7 @@ $hogwarts-gray: #100E1B;
         background-color: #fff;
         width: 320px;
         margin: 3em auto;
-        box-shadow: 0 0 12px $gryffindor-gold;
+        box-shadow: 0 0 12px #fff;
 
         .input {
             box-sizing: border-box;
