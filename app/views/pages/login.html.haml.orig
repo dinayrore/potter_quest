@@ -3,7 +3,12 @@
   %head
     %meta(charset='UTF-8')
     %meta(content="width=device-width, initial-scale=1" name="viewport")
+<<<<<<< HEAD
     %title Login
+=======
+    %title Sorting
+    =stylesheet_link_tag "main.scss.erb"
+>>>>>>> 6305a82f6eca49869a69d46e6c72476c8d8f19b7
   %body
     %main
       %section#login-page
