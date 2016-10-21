@@ -14,10 +14,11 @@ var potterQuest = (function() {
     this.bounds = this.elem.getBoundingClientRect();
     this.scenePos = {
       x: -70,
-      y: -820
+      y: -830
     }
     this.sceneShift = {
-      x: 770
+      x: 770,
+      y: 590
     }
     this.gameSpeed = 75;
     this.state = 'init';
@@ -26,8 +27,13 @@ var potterQuest = (function() {
     this.characters = [];
     this.obstacles = [];
     this.typing = {
+      show: false,
       phrase: ''
     };
+    this.responding = {
+      show: false,
+      phrase: ''
+    }
   }
 
   Game.prototype.init = function() {
@@ -79,41 +85,51 @@ var potterQuest = (function() {
   Game.prototype.runCastle = function() {
     $(this.elem).css({
       'background-image': 'url(' + backgrounds.fullBackground + ')',
-      'background-size': '890% 865%', //890%, 865%
+      'background-size': '890% 872%', //890%, 865%
       'background-position': this.scenePos.x + 'px ' + this.scenePos.y + 'px'
     });
   }
 
+  Game.prototype.checkTyping = function(phrase) {
+    phrase = phrase.toLowerCase();
+    if (phrase.includes('look at tree')) {
+      this.responding.phrase = 'The tree is a normal tree.';
+    } else {
+      this.responding.phrase = "I don't understand that.";
+    }
+    $('.dialog').text(this.responding.phrase).show();
+    this.responding.show = true;
+  }
+
   Game.prototype.handleKeyPress = function(key) {
-    console.log(key);
     switch (this.state) {
       case 'init':
         // Do nothing.
         break;
       case 'welcome':
         if (key >= 48 && key <= 220) {
-          // Alphanumeric
+          this.typing.show = true;
           var char = String.fromCharCode(key);
           this.typing.phrase += char;
           $('.typing').text(this.typing.phrase).show();
-        } else if (key == 8) {
-          // Backspace
-          console.log('back');
-          if (this.typing.phrase.length > 1) {
-            this.typing.phrase = this.typing.phrase.substring(0, this.typing.phrase.length - 1);
-            $('.typing').text(this.typing.phrase).show();
-          } else {
-            this.typing.phrase = '';
-            $('.typing').hide();
-          }
         } else if (key === 13) {
           // Enter
-          this.typing.phrase = '';
-          $('.typing').hide();
+          if (this.typing.show) {
+            this.typing.show = false;
+            $('.typing').hide();
+            var userPhrase = this.typing.phrase;
+            this.typing.phrase = '';
+            this.checkTyping(userPhrase);
+          } else if (this.responding.show) {
+            this.responding.show = false;
+            $('.dialog').text("Testing").hide();
+          }
         } else if (key === 32) {
           // Space
-          this.typing.phrase += ' ';
-          $('.typing').text(this.typing.phrase).show();
+          if (this.typing.phrase.length > 1) {
+            this.typing.phrase += ' ';
+            $('.typing').text(this.typing.phrase).show();
+          }
         }
         break;
     }
@@ -127,6 +143,16 @@ var potterQuest = (function() {
       case 'welcome':
         var action = this.characters[0].action;
         switch (key) {
+          case 8:
+            // Backspace
+            if (this.typing.phrase.length > 1) {
+              this.typing.phrase = this.typing.phrase.substring(0, this.typing.phrase.length - 1);
+              $('.typing').text(this.typing.phrase).show();
+            } else {
+              this.typing.phrase = '';
+              $('.typing').hide();
+            }
+            break;
           case 37:
             action = (action === 'walk-left') ? 'stop' : 'walk-left';
             break;
@@ -168,7 +194,6 @@ var potterQuest = (function() {
     if (action === 'walk-left' && charBounds.left < gameBounds.left) {
       character.x = 700;
       this.scenePos.x = this.scenePos.x + this.sceneShift.x;
-
     }
     if (action === 'walk-right' && charBounds.right > gameBounds.right) {
       character.x = 0;
@@ -176,9 +201,17 @@ var potterQuest = (function() {
     }
     if (action === 'walk-up' && charBounds.top < gameBounds.top) {
       character.y = 500;
+      this.scenePos.y = this.scenePos.y + this.sceneShift.y;
     }
     if (action === 'walk-down' && charBounds.bottom > gameBounds.bottom) {
       character.y = 0;
+      this.scenePos.y = this.scenePos.y - this.sceneShift.y;
+    }
+    if (this.scenePos.x > -70) {
+      this.scenePos.x = -5460;
+    }
+    if (this.scenePos.x < -5460) {
+      this.scenePos.x = -70;
     }
     $(this.elem).css({
       'background-position': this.scenePos.x + 'px ' + this.scenePos.y + 'px'
@@ -206,7 +239,7 @@ var potterQuest = (function() {
     this.y = y;
     this.backX = 0;
     this.backY = 0;
-    this.speed = 10;
+    this.speed = 20;
     this.action = 'stand';
   }
 
@@ -304,17 +337,9 @@ var potterQuest = (function() {
     game.init();
   }
 
-  // // Canvas testing
-  //
-  // window.onload = function() {
-  //   var canvas = $('#game-canvas')[0];
-  //   var context = canvas.getContext('2d');
-  //   var img = $('.full-background')[0];
-  //   context.drawImage(img, -100, -900, 6500, 4500);
-  // };
 
   return {
-    // game: game
+    game: game
   }
 
 })();
