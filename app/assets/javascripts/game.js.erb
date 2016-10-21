@@ -11,7 +11,7 @@ var potterQuest = (function() {
   /* Game Constructor and Methods */
   function Game() {
     this.elem = $('.game-container')[0];
-    this.bounds = this.elem.getBoundingClientRect();
+    this.bounds = null;
     this.scenePos = {
       x: -70,
       y: -830
@@ -172,6 +172,9 @@ var potterQuest = (function() {
   }
 
   Game.prototype.updateGame = function() {
+    if (this.state !== 'init') {
+      this.bounds = this.elem.getBoundingClientRect();
+    }
     var allCharacters = this.characters;
     for (var index = 0; index < allCharacters.length; index++) {
       var character = allCharacters[index];
@@ -331,11 +334,11 @@ var potterQuest = (function() {
   }
 
   var game;
-  window.onload = function() {
+  // setTimeout(function() {
     /* Create new game */
     game = new Game();
     game.init();
-  }
+  // }, 100);
 
 
   return {
