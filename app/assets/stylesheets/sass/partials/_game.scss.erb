@@ -1,29 +1,16 @@
-<<<<<<< HEAD:app/assets/stylesheets/sass/partials/_game.scss
-=======
 $image-path: '../images/';
 $font-path: '../fonts/';
 $hogwarts-boats: url("<%= asset_path('hogwarts-boats.jpg')%>");
 $hogwarts-gray: #100E1B;
 $hogwarts-gold: rgb(100,100,0);
-$subtle-background: url($image-path + 'subtle-noise.png');
+$subtle-background: url("<%= asset_path('subtle-noise.png')%>");
+$full-background: url("<%= asset_path('background-sprite.png')%>");
 $default-radius: 5px;
 $large-radius: 20px;
 
-
-
-
-
-
-
->>>>>>> f80f85ca14c0c95eb599ce1c0c08b912ffe3a752:app/assets/stylesheets/sass/partials/_game.scss.erb
 @font-face {
   font-family: Potter;
-  src: url($font-path + 'HARRYP__.TTF');
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
+  src: url("<%= asset_path('HARRYP__.TTF')%>");
 }
 
 section {
@@ -73,14 +60,16 @@ section {
   }
 }
 
-#game-canvas {
-  background: white;
-  border: 6px solid black;
-  border-radius: $default-radius;
-  box-shadow: 10px 10px 50px white;
-  overflow: hidden;
-}
+// // Canvase testing
+// #game-canvas {
+//   display: none;
+//   background: $full-background;
+//   border: 6px solid black;
+//   border-radius: $default-radius;
+//   box-shadow: 10px 10px 50px white;
+//   overflow: hidden;
+// }
 
-.full-background {
-  display: none;
-}
+// .full-background {
+//   display: none;
+// }

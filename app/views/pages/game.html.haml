@@ -4,7 +4,6 @@
     %meta(charset='UTF-8')
     %meta(content="width=device-width, initial-scale=1" name="viewport")
     %title Harry Potter Quest
-    =stylesheet_link_tag "main.scss"
   %body
     %main
       %section
@@ -13,8 +12,6 @@
           %button(class='startBtn') Play Game
           .typing
           .dialog Answer
-        %canvas#game-canvas(width='700' height='500')
-        %img.full-background(src='../../assets/images/background-sprite.png')
-
+        -# %canvas#game-canvas(width='700' height='500')
     =javascript_include_tag "vendor.min"
     =javascript_include_tag "game"

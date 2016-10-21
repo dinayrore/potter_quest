@@ -1,7 +1,6 @@
 var potterQuest = (function() {
   var backgrounds = {
-    initBackground: "<%= asset_path('subtle-noise.png')%>",
-    welcomeBackground: "<%= asset_path('game-title.png')%>",
+    initBackground: "<%= asset_path('game_title.png')%>",
     fullBackground: "<%= asset_path('background-sprite.png')%>"
   }
 
@@ -13,6 +12,13 @@ var potterQuest = (function() {
   function Game() {
     this.elem = $('.game-container')[0];
     this.bounds = this.elem.getBoundingClientRect();
+    this.scenePos = {
+      x: -70,
+      y: -820
+    }
+    this.sceneShift = {
+      x: 770
+    }
     this.gameSpeed = 75;
     this.state = 'init';
     this.score = 0;
@@ -26,7 +32,8 @@ var potterQuest = (function() {
 
   Game.prototype.init = function() {
     $(this.elem).css({
-      'background-image': 'url(' + backgrounds.initBackground + ')'
+      'background-image': 'url(' + backgrounds.initBackground + ')',
+      'background-size': '100% 100%'
     });
     this.initEventHandlers(this);
     this.loopHandle = setInterval(function() {
@@ -40,6 +47,7 @@ var potterQuest = (function() {
       if (self.state === 'init') {
         $('.game-container').find('.startBtn').hide();
         self.state = 'welcome';
+        self.addCharacter('Harry Potter', avatars.harry);
       }
     });
     // Handle key presses
@@ -71,7 +79,8 @@ var potterQuest = (function() {
   Game.prototype.runCastle = function() {
     $(this.elem).css({
       'background-image': 'url(' + backgrounds.fullBackground + ')',
-      'background-size': '100% 100%'
+      'background-size': '890% 865%', //890%, 865%
+      'background-position': this.scenePos.x + 'px ' + this.scenePos.y + 'px'
     });
   }
 
@@ -111,12 +120,12 @@ var potterQuest = (function() {
   }
 
   Game.prototype.handleKeyUp = function(key) {
-    var action = this.characters[0].action;
     switch (this.state) {
       case 'init':
         // Do nothing.
         break;
       case 'welcome':
+        var action = this.characters[0].action;
         switch (key) {
           case 37:
             action = (action === 'walk-left') ? 'stop' : 'walk-left';
@@ -131,9 +140,9 @@ var potterQuest = (function() {
             action = (action === 'walk-down') ? 'stop' : 'walk-down';
             break;
         }
+        this.characters[0].action = action;
         break;
     }
-    this.characters[0].action = action;
   }
 
   Game.prototype.updateGame = function() {
@@ -141,8 +150,8 @@ var potterQuest = (function() {
     for (var index = 0; index < allCharacters.length; index++) {
       var character = allCharacters[index];
       character.updateCharacter();
+      this.checkCollisions();
     }
-    this.checkCollisions();
   }
 
   Game.prototype.checkCollisions = function() {
@@ -158,9 +167,12 @@ var potterQuest = (function() {
 
     if (action === 'walk-left' && charBounds.left < gameBounds.left) {
       character.x = 700;
+      this.scenePos.x = this.scenePos.x + this.sceneShift.x;
+
     }
     if (action === 'walk-right' && charBounds.right > gameBounds.right) {
       character.x = 0;
+      this.scenePos.x = this.scenePos.x - this.sceneShift.x;
     }
     if (action === 'walk-up' && charBounds.top < gameBounds.top) {
       character.y = 500;
@@ -168,24 +180,30 @@ var potterQuest = (function() {
     if (action === 'walk-down' && charBounds.bottom > gameBounds.bottom) {
       character.y = 0;
     }
+    $(this.elem).css({
+      'background-position': this.scenePos.x + 'px ' + this.scenePos.y + 'px'
+    });
   }
 
   Game.prototype.checkObstacles = function() {
     // Nothing here yet.
   }
 
-  Game.prototype.addCharacter = function(character) {
-    this.characters.push(character);
+  Game.prototype.addCharacter = function(name, avatar) {
+    /* Create main character */
+    var newCharacter = new Character(name, avatar, 350, 300);
+    newCharacter.create(this);
+    this.characters.push(newCharacter);
   }
 
   /* Character Constructor and Methods */
-  function Character(name, avatar) {
+  function Character(name, avatar, x, y) {
     this.elem = null;
     this.bounds = null;
     this.name = name;
     this.image = avatar;
-    this.x = 0;
-    this.y = 0;
+    this.x = x;
+    this.y = y;
     this.backX = 0;
     this.backY = 0;
     this.speed = 10;
@@ -279,26 +297,24 @@ var potterQuest = (function() {
     });
   }
 
-  /* Create new game */
-  var game = new Game();
-  game.init();
-
-  /* Create main character */
-  var harry = new Character('Harry Potter', avatars.harry);
-  harry.create(game);
-  game.addCharacter(harry);
-
-  // Canvas testing
-
+  var game;
   window.onload = function() {
-    var canvas = $('#game-canvas')[0];
-    var context = canvas.getContext('2d');
-    var img = $('.full-background')[0];
-    context.drawImage(img, -100, -900, 6500, 4500);
-  };
+    /* Create new game */
+    game = new Game();
+    game.init();
+  }
+
+  // // Canvas testing
+  //
+  // window.onload = function() {
+  //   var canvas = $('#game-canvas')[0];
+  //   var context = canvas.getContext('2d');
+  //   var img = $('.full-background')[0];
+  //   context.drawImage(img, -100, -900, 6500, 4500);
+  // };
 
   return {
-    game: game
+    // game: game
   }
 
 })();

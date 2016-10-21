@@ -1,19 +1,21 @@
-<<<<<<< HEAD
 $image-path: '../images/';
 $font-path: '../fonts/';
-$hogwarts-boats: url($image-path + 'hogwarts-boats.jpg');
+$hogwarts-boats: url("<%= asset_path('hogwarts-boats.jpg')%>");
 $hogwarts-gray: #100E1B;
 $hogwarts-gold: rgb(100,100,0);
-$subtle-background: url($image-path + 'subtle-noise.png');
+$subtle-background: url("<%= asset_path('subtle-noise.png')%>");
 $default-radius: 5px;
 $large-radius: 20px;
 
-=======
+@font-face {
+  font-family: Potter;
+  src: url("<%= asset_path('HARRYP__.TTF')%>");
+}
+
 * {
   margin: 0;
   padding: 0;
 }
->>>>>>> f80f85ca14c0c95eb599ce1c0c08b912ffe3a752
 
 $gryffindor-red: #941B08;
 $gryffindor-gold: #D8B33B;
