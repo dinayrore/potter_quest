@@ -1,11 +1,11 @@
 var potterQuest = (function() {
   var backgrounds = {
-    initBackground: '../../assets/images/subtle-noise.png',
-    welcomeBackground: '../../assets/images/game_title.png'
+    initBackground: "<%= asset_path('subtle-noise.png')%>",
+    welcomeBackground: "<%= asset_path('game-title.png')%>"
   }
 
   var avatars = {
-    harry: '../../assets/images/harry_potter_sprite.png'
+    harry: "<%= asset_path('harry_potter_sprite.png')%>"
   }
 
   /* Game Constructor and Methods */

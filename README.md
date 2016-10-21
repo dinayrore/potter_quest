@@ -40,16 +40,23 @@ Download postgresql
   2. Move the app to the /Applications file folder.
   3. Double Click on app to run the program.
 
+Install postgresql using brew
+```
+brew install postgresql
+```
 
 ### Deployment
 
 Please complete the following procedure to run the program on a live system:
   1. Open Terminal.
   2. Change your directory to the one that which you have saved this zip file. `$ cd folder_name`
-  3. Run `$ bundle install --without production` to install needed gems.
-  4. Next, migrate the database `rails db:migrate`
-  5. Finally, run the test suite to verify that everything is working correctly: `$ rails test`
-  6. If the test suite passes, you'll be ready to run the app in a local server: `$ rails server`
+  3. Run `$ bundle install` to install needed gems located in the Gemfile.
+  4. First, create the database: `rails db:create`
+  5. Next, migrate the database: `rails db:migrate`
+  6. Finally, run the test suite to verify that everything is working correctly: `$ rails test`
+  7. If the test suite passes, you'll be ready to run the app in a local server: `$ rails server`
+  8. You should see `Rails 5.0.0.1 application starting in development on http://localhost:3000` in your Terminal.
+  9. Go to localhost:3000 in your web browser to view the application homepage.
 
 ## Built With
 

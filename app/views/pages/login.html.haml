@@ -4,10 +4,16 @@
     %meta(charset='UTF-8')
     %meta(content="width=device-width, initial-scale=1" name="viewport")
     %title Sorting
-    %link(rel="shortcut icon" href="images/favicon.ico" type="image/x-icon")
-    %link(rel="icon" href="images/favicon.ico" type="image/x-icon")
-    %link(rel="stylesheet" href="../../assets/stylesheets/main.min.css")
+    =stylesheet_link_tag "main.min.css"
   %body
+    %nav
+      .nav-bar
+        %ul
+          %li
+          %li
+          %li
+          %li
+          %li
     %main
       %section#login-page
         .form-wrap
@@ -32,6 +38,6 @@
               %input.button{:type => "submit", :value => "Login"}
               .help-text
                 %p Welcome back to Hogwart's!
-    %script(src="../../assets/javascripts/vendor.min.js")
-    %script(src="../../assets/javascripts/login.js")%h1 StaticPages#login
-%p Find me in app/views/pages/login.html.haml
+
+    =javascript_include_tag "vendor.min"
+    =javascript_include_tag "login"
