@@ -5,9 +5,15 @@
       %h3.profile-tab
         %a.active{:id =>"profile-tab-content"} Profile
       %h3.stats-tab
+        %a{:id => "stats-tab-content"}
+      %h3.stats-tab
         %a{:id => "stats-tab-content"} Stats
     .tabs-content
       #profile-tab-content.active
         .signup-form
       #stats-tab-content
         .signup-form
+
+
+=javascript_include_tag "vendor.min"
+=javascript_include_tag "profile"

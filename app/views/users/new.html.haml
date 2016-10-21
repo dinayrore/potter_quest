@@ -16,7 +16,7 @@
           .help-text
             %p Don't worry, the Sorting Hat will choose your house later!
       #login-tab-content
-        .signup-form
+        .login-form
           =form_for(@user) do |f|
             =f.email_field :email, class: "input", placeholder: "Email"
             =f.password_field :password, class: "input", placeholder: "Password"
@@ -24,5 +24,5 @@
         .help-text
           %p Welcome back to Hogwart's!
 
--# =javascript_include_tag "vendor.min"
--# =javascript_include_tag "login"
+=javascript_include_tag "vendor.min"
+=javascript_include_tag "login"
