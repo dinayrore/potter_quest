@@ -1,37 +1,28 @@
-!!! 5
-%html(lang='en')
-  %head
-    %meta(charset='UTF-8')
-    %meta(content="width=device-width, initial-scale=1" name="viewport")
-    %title Sorting
-    -# =stylesheet_link_tag "main.scss.erb"
-  %body
-    %main
-      %section#login-page
-        .form-wrap
-          .tabs
-            %h3.signup-tab
-              %a.active{:id =>"signup-tab-content"} Sign Up
-            %h3.login-tab
-              %a{:id => "login-tab-content"} Login
-          .tabs-content
-            #signup-tab-content.active
-              .signup-form
-                =form_for(@user) do |f|
-                  =f.text_field :name, class: "input", placeholder: "Name"
-                  =f.email_field :email, class: "input", placeholder: "Email"
-                  =f.password_field :password, class: "input", placeholder: "Password"
-                  =f.submit "Sign Up", class: "button"
-                .help-text
-                  %p Don't worry, the Sorting Hat will choose your house later!
-            #login-tab-content
-              .signup-form
-                =form_for(@user) do |f|
-                  =f.email_field :email, class: "input", placeholder: "Email"
-                  =f.password_field :password, class: "input", placeholder: "Password"
-                  =f.submit "Login", class: "button"
-              .help-text
-                %p Welcome back to Hogwart's!
+%section#login-page
+  .form-wrap
+    .tabs
+      %h3.signup-tab
+        %a.active{:id =>"signup-tab-content"} Sign Up
+      %h3.login-tab
+        %a{:id => "login-tab-content"} Login
+    .tabs-content
+      #signup-tab-content.active
+        .signup-form
+          =form_for(@user) do |f|
+            =f.text_field :name, class: "input", placeholder: "Name"
+            =f.email_field :email, class: "input", placeholder: "Email"
+            =f.password_field :password, class: "input", placeholder: "Password"
+            =f.submit "Sign Up", class: "button"
+          .help-text
+            %p Don't worry, the Sorting Hat will choose your house later!
+      #login-tab-content
+        .signup-form
+          =form_for(@user) do |f|
+            =f.email_field :email, class: "input", placeholder: "Email"
+            =f.password_field :password, class: "input", placeholder: "Password"
+            =f.submit "Login", class: "button"
+        .help-text
+          %p Welcome back to Hogwart's!
 
-    -# =javascript_include_tag "vendor.min"
-    -# =javascript_include_tag "login"
+-# =javascript_include_tag "vendor.min"
+-# =javascript_include_tag "login"
