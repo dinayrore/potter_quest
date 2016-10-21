@@ -8,6 +8,7 @@ $gryffindor-gold: #D8B33B;
 $nav-resting-grey: #e6e7e8;
 
 .nav-bar {
+  position: fixed;
   z-index: 2;
   width: 100%;
   background-color: $nav-resting-grey;
