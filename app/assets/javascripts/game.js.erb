@@ -1,3 +1,4 @@
+
 var potterQuest = (function() {
   var backgrounds = {
     initBackground: "<%= asset_path('game_title.png')%>",
@@ -12,14 +13,14 @@ var potterQuest = (function() {
   function Game() {
     this.elem = $('.game-container')[0];
     this.bounds = null;
-    this.scenePos = {
-      x: -70,
-      y: -830
-    }
     this.sceneShift = {
       x: 770,
       y: 590
-    }
+    };
+    this.scenePos = {
+      x: -70,
+      y: -3780
+    };
     this.gameSpeed = 75;
     this.state = 'init';
     this.score = 0;
@@ -33,7 +34,8 @@ var potterQuest = (function() {
     this.responding = {
       show: false,
       phrase: ''
-    }
+    };
+    this.pause = false;
   }
 
   Game.prototype.init = function() {
@@ -43,7 +45,9 @@ var potterQuest = (function() {
     });
     this.initEventHandlers(this);
     this.loopHandle = setInterval(function() {
-      game.run();
+      if (!game.pause) {
+        game.run();
+      }
     }, this.gameSpeed);
   }
 
@@ -52,7 +56,10 @@ var potterQuest = (function() {
     $('.game-container').on('click', '.startBtn', function() {
       if (self.state === 'init') {
         $('.game-container').find('.startBtn').hide();
-        self.state = 'welcome';
+        self.state = 'swingBridge';
+        self.responding.show = true;
+        self.responding.phrase = "You, Harry Potter, are tasked with finding all of Lord Voldemort's horcruxes. It's a dangerous task, but you must protect the wizarding world from You-Know-Who's return.";
+        $('.dialog').text(self.responding.phrase).show();
         self.addCharacter('Harry Potter', avatars.harry);
       }
     });
@@ -67,22 +74,47 @@ var potterQuest = (function() {
 
   Game.prototype.run = function() {
     this.time++;
-    this.checkState();
-    this.updateGame();
+    if (this.state !== 'init') {
+      this.updateGame();
+    }
   }
 
   Game.prototype.checkState = function() {
+    var backX = this.scenePos.x;
+    var backY = this.scenePos.y;
+    var initX = -70;
+    var initY = -3780;
+    if ( backX === initX && backY === initY ) {
+      this.state = 'swingBridge';
+    } else if ( backX === initX - this.sceneShift.x * 1 && backY === initY ) {
+      this.state = 'stump';
+    } else if ( backX === initX - this.sceneShift.x * 2 && backY === initY ) {
+      this.state = 'field';
+    } else if ( backX === initX && backY === initY + this.sceneShift.y * 1 ) {
+      this.state = 'oldMan';
+    } else if ( backX === initX - this.sceneShift.x * 1 && backY === initY + this.sceneShift.y * 1 ) {
+      this.state = 'horizBridge';
+    } else if ( backX === initX - this.sceneShift.x * 2 && backY === initY + this.sceneShift.y * 1) {
+      this.state = 'flowers';
+    } else if ( backX === initX && backY === initY + this.sceneShift.y * 2) {
+      this.state = 'verticalBridge';
+    } else if ( backX === initX - this.sceneShift.x * 1 && backY === initY + this.sceneShift.y * 2) {
+      this.state = 'stoneBridge';
+    } else if ( backX === initX - this.sceneShift.x * 2 && backY === initY + this.sceneShift.y * 2 ) {
+      this.state = 'lake';
+    }
+
     switch (this.state) {
       case 'init':
         // Do nothing.
         break;
-      case 'welcome':
-        this.runCastle();
+      case 'swingBridge':
+        this.runCloverScene();
         break;
     }
   }
 
-  Game.prototype.runCastle = function() {
+  Game.prototype.runCloverScene = function() {
     $(this.elem).css({
       'background-image': 'url(' + backgrounds.fullBackground + ')',
       'background-size': '890% 872%', //890%, 865%
@@ -91,12 +123,44 @@ var potterQuest = (function() {
   }
 
   Game.prototype.checkTyping = function(phrase) {
+    var scene = this.state;
     phrase = phrase.toLowerCase();
-    if (phrase.includes('look at tree')) {
-      this.responding.phrase = 'The tree is a normal tree.';
-    } else {
-      this.responding.phrase = "I don't understand that.";
+    switch (scene) {
+      case 'init':
+        // Do nothing
+        break;
+      case 'swingBridge':
+        // Looking around
+        if (phrase.includes('look')) {
+          this.responding.phrase = "You are standing near a bridge, and you see a tall tree in the distance. There is a tall mountain range blocking your path to the west and south. You hope there is a horcrux to destroy somewhere...but even if you find it, how will you destroy it?";
+          if (phrase.includes('tree')) {
+            this.responding.phrase = "The tree is a normal tree.";
+          }
+          if (phrase.includes('grass')) {
+            this.responding.phrase = "The grass is green, but it seems like the whole world is darker while You-Know-Who still lives.";
+          }
+          if (phrase.includes('bridge')) {
+            this.responding.phrase = "The wooden bridge looks old, but safe.";
+          }
+          if (phrase.includes('river') || phrase.includes('water')) {
+            this.responding.phrase = "The river below is flowing calmly.";
+          }
+        } else if (phrase.includes('take')) {
+          this.responding.phrase = "You don't need it.";
+          if (phrase.includes('grass')) {
+            this.responding.phrase = "Why would you carry the grass with you...?";
+          }
+          if (phrase.includes('river') || phrase.includes('water')) {
+            this.responding.phrase = "You can't reach the river, and you couldn't carry it anyway.";
+          }
+        } else {
+          this.responding.phrase = "I don't understand that.";
+        }
+        break;
+      default:
+        this.responding.phrase = "You are standing in scene: " + this.state;
     }
+
     $('.dialog').text(this.responding.phrase).show();
     this.responding.show = true;
   }
@@ -106,8 +170,11 @@ var potterQuest = (function() {
       case 'init':
         // Do nothing.
         break;
-      case 'welcome':
+      default:
         if (key >= 48 && key <= 220) {
+          this.pause = true;
+          this.responding.show = false;
+          $('.dialog').text("Testing").hide();
           this.typing.show = true;
           var char = String.fromCharCode(key);
           this.typing.phrase += char;
@@ -124,6 +191,7 @@ var potterQuest = (function() {
             this.responding.show = false;
             $('.dialog').text("Testing").hide();
           }
+          this.pause = false;
         } else if (key === 32) {
           // Space
           if (this.typing.phrase.length > 1) {
@@ -131,7 +199,6 @@ var potterQuest = (function() {
             $('.typing').text(this.typing.phrase).show();
           }
         }
-        break;
     }
   }
 
@@ -140,7 +207,7 @@ var potterQuest = (function() {
       case 'init':
         // Do nothing.
         break;
-      case 'welcome':
+      default:
         var action = this.characters[0].action;
         switch (key) {
           case 8:
@@ -152,6 +219,9 @@ var potterQuest = (function() {
               this.typing.phrase = '';
               $('.typing').hide();
             }
+            break;
+          case 27:
+            this.pause = !this.pause;
             break;
           case 37:
             action = (action === 'walk-left') ? 'stop' : 'walk-left';
@@ -166,8 +236,10 @@ var potterQuest = (function() {
             action = (action === 'walk-down') ? 'stop' : 'walk-down';
             break;
         }
+        if (this.pause) {
+          action = 'stop';
+        }
         this.characters[0].action = action;
-        break;
     }
   }
 
@@ -197,28 +269,29 @@ var potterQuest = (function() {
     if (action === 'walk-left' && charBounds.left < gameBounds.left) {
       character.x = 700;
       this.scenePos.x = this.scenePos.x + this.sceneShift.x;
-    }
-    if (action === 'walk-right' && charBounds.right > gameBounds.right) {
+    } else if (action === 'walk-right' && charBounds.right > gameBounds.right) {
       character.x = 0;
       this.scenePos.x = this.scenePos.x - this.sceneShift.x;
-    }
-    if (action === 'walk-up' && charBounds.top < gameBounds.top) {
+    } else if (action === 'walk-up' && charBounds.top < gameBounds.top) {
       character.y = 500;
       this.scenePos.y = this.scenePos.y + this.sceneShift.y;
-    }
-    if (action === 'walk-down' && charBounds.bottom > gameBounds.bottom) {
+    } else if (action === 'walk-down' && charBounds.bottom > gameBounds.bottom) {
       character.y = 0;
       this.scenePos.y = this.scenePos.y - this.sceneShift.y;
     }
     if (this.scenePos.x > -70) {
-      this.scenePos.x = -5460;
-    }
-    if (this.scenePos.x < -5460) {
+      this.scenePos.x = -1610;
+    } else if (this.scenePos.x < -1610) {
       this.scenePos.x = -70;
+    } else if (this.scenePos.y > -2600) {
+      this.scenePos.y = -3780;
+    } else if (this.scenePos.y < -3780) {
+      this.scenePos.y = -2600;
     }
     $(this.elem).css({
       'background-position': this.scenePos.x + 'px ' + this.scenePos.y + 'px'
     });
+    this.checkState();
   }
 
   Game.prototype.checkObstacles = function() {
@@ -333,12 +406,10 @@ var potterQuest = (function() {
     });
   }
 
+  /* Create new game */
   var game;
-  // setTimeout(function() {
-    /* Create new game */
-    game = new Game();
-    game.init();
-  // }, 100);
+  game = new Game();
+  game.init();
 
 
   return {
