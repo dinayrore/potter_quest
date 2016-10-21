@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  root 'pages#login'
-  get  '/profile', to: 'pages#profile'
-  get  '/leaderboard', to: 'pages#leaderboard'
-  get  '/game', to: 'pages#game'
-  get  '/signup', to: 'users#new'
+  root 'users#new' # login/signup
+
+  get  '/profile', to: 'pages#profile' # user profile (static)
+  get  '/leaderboard', to: 'pages#leaderboard' # leaderboard (static)
+  get  '/game', to: 'pages#game' # game page (static)
+
+  post '/signup', to: 'users#create' # creates a user
 
   resources :users
 end
