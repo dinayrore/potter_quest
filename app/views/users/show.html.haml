@@ -1,17 +1,24 @@
 !!! 5
-%html(lang='en')
-  %head
-    %meta(charset='UTF-8')
-    %meta(content="width=device-width, initial-scale=1" name="viewport")
-    %title Hogwarts Report Card
-    %link(rel="shortcut icon" href="images/favicon.ico" type="image/x-icon")
-    %link(rel="icon" href="images/favicon.ico" type="image/x-icon")
-    %link(rel="stylesheet" href="../../assets/stylesheets/main.min.css")
-  %body
-    %header
-      %nav
-        %ul
-          %li Profile
-          %li Famous Wizards and Witches
-    %script(src="../../assets/javascripts/vendor.min.js")
-    %script(src="../../assets/javascripts/profile.js")
+%section#profile-page
+  .profile-wrap
+    .tabs
+      %h3.profile-tab
+        %a.active{:id =>"profile-tab-content"} Profile
+      %h3.games-tab
+        %a{:id => "games-tab-content"} Games
+      %h3.account-tab
+        %a{:id => "account-tab-content"} Account
+    .tabs-content
+      #profile-tab-content.active
+        %h3
+          = @user.name
+        %h3
+          = @user.email
+
+
+      #games-tab-content
+      #account-tab-content
+
+
+=javascript_include_tag "vendor.min"
+=javascript_include_tag "profile"
