@@ -14,7 +14,6 @@ $(document).ready(function() {
 		console.log(this);
 
 		var tab_content = $(this).attr('href');
-		console.log(tab_content);
 		$('div[id$="tab-content"]').removeClass('active');
 		$('div#' + tab_content).addClass('active');
 	});
