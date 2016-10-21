@@ -4,16 +4,8 @@
     %meta(charset='UTF-8')
     %meta(content="width=device-width, initial-scale=1" name="viewport")
     %title Sorting
-    =stylesheet_link_tag "main.min.css"
+    =stylesheet_link_tag "main.scss.erb"
   %body
-    %nav
-      .nav-bar
-        %ul
-          %li
-          %li
-          %li
-          %li
-          %li
     %main
       %section#login-page
         .form-wrap
@@ -24,18 +16,20 @@
               %a{:href => "login-tab-content"} Login
           .tabs-content
             #signup-tab-content.active
-              %form.signup-form{:action => "", :method => "POST"}
-                %input.input#user_email{:type => "email", :autocomplete => "off", :placeholder => "Email"}
-                %input.input#user_name{:type => "text", :autocomplete => "off", :placeholder => "Username"}
-                %input.input#user_pass{:type => "password", :autocomplete => "off", :placeholder => "Password"}
-                %input.button{:type => "submit", :value => "Sign Up"}
-              .help-text
-                %p Don't worry, the Sorting Hat will choose your house later!
+              .signup-form
+                =form_for(@user) do |f|
+                  =f.text_field :name, class: "input", placeholder: "Name"
+                  =f.email_field :email, class: "input", placeholder: "Email"
+                  =f.password_field :password, class: "input", placeholder: "Password"
+                  =f.submit "Sign Up", class: "button"
+                .help-text
+                  %p Don't worry, the Sorting Hat will choose your house later!
             #login-tab-content
-              %form.login-form{:action => "", :method => "POST"}
-              %input.input#user_login{:type => "text", :autocomplete => "off", :placeholder => "Email or Username"}
-              %input.input#user_pass{:type => "password", :autocomplete => "off", :placeholder => "Password"}
-              %input.button{:type => "submit", :value => "Login"}
+              .signup-form
+                =form_for(@user) do |f|
+                  =f.email_field :email, class: "input", placeholder: "Email"
+                  =f.password_field :password, class: "input", placeholder: "Password"
+                  =f.submit "Login", class: "button"
               .help-text
                 %p Welcome back to Hogwart's!
 
