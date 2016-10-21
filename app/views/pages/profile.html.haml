@@ -4,15 +4,14 @@
     .tabs
       %h3.profile-tab
         %a.active{:id =>"profile-tab-content"} Profile
-      %h3.stats-tab
-        %a{:id => "stats-tab-content"}
-      %h3.stats-tab
-        %a{:id => "stats-tab-content"} Stats
+      %h3.games-tab
+        %a{:id => "games-tab-content"} Games
+      %h3.account-tab
+        %a{:id => "account-tab-content"} Account
     .tabs-content
       #profile-tab-content.active
-        .signup-form
-      #stats-tab-content
-        .signup-form
+      #games-tab-content
+      #account-tab-content
 
 
 =javascript_include_tag "vendor.min"
