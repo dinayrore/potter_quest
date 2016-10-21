@@ -1,7 +1,4 @@
 %header.nav-bar
-  .nav-icon
-    %a{:href => "/"}
-      %i.material-icons menu
   %ul
     %li
       %a{:href => "/"} Home
@@ -12,4 +9,6 @@
     %li
       %a{:href => "/leaderboard"} Leaderboard
     %li
-      %a{:href => "/"} Extras
+      .nav-icon
+        %a{:href => "/"}
+          %i.material-icons menu
