@@ -18,7 +18,7 @@
             #signup-tab-content.active
               .signup-form
                 =form_for(@user) do |f|
-                  = render 'shared/error_messages' -# = this line of code should help render error messages in file folder shared/_error_messages.html.haml
+                  = render 'shared/error_messages'
                   =f.text_field :name, class: "input", placeholder: "Name"
                   =f.email_field :email, class: "input", placeholder: "Email"
                   =f.password_field :password, class: "input", placeholder: "Password"
