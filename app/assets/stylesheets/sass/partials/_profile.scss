@@ -1,5 +1,5 @@
 
-  $gryffindor-red: #941B08;
+  $gryffindor-red: #ae2825;
   $gryffindor-gold: #D8B33B;
   $nav-resting-grey: #e6e7e8;
   $hogwarts-gray: #100E1B;
@@ -55,6 +55,8 @@
       .profile-wrap .tabs-content {
           padding: 1.5em;
           height: 60vh;
+          position: relative;
+
       }
 
       .profile-wrap .tabs-content div[id$="tab-content"] {
@@ -65,17 +67,18 @@
           display: block !important;
       }
 
+
       #profile-tab-content {
-        .house-crest {
 
-          width: 25%;
-          background-color: #121d3d;
+
+        img.house-crest {
+          float: right;
+          width: 250px;
+          padding: 10px;
+          // background-color: #121d3d;
+          background-color: $nav-resting-grey;
           border: 1px solid #CFCFCF;
-
-        img {
-          width: 100%;
-          padding: 8px;
-
+          border-radius: 5px;
 
         }
       }
@@ -88,13 +91,3 @@
       #account-tab-content {
 
       }
-
-
-
-
-
-
-
-
-
-  }
