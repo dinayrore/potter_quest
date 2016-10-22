@@ -1,7 +1,7 @@
 #
 class UsersController < ApplicationController
-  def show
-    @user = User.find(params[:id])
+  def profile
+    redirect_to user_path(current_user)
   end
 
   def new
