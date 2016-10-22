@@ -15,7 +15,7 @@ $(document).ready(function() {
 	});
 
 
-	/** BELOW HERE IS EVENT LISTENER FOR NAVIGATION BAR */x
+	/** BELOW HERE IS EVENT LISTENER FOR NAVIGATION BAR */
 
 	var navBarShown = false;
 
