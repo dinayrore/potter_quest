@@ -54,10 +54,11 @@
 
       .profile-wrap .tabs-content {
           padding: 1.5em;
-          height: 60vh;
           position: relative;
           font-family: "Raleway";
-          display: block;
+          // overflow: hidden;
+
+
             .title-container {
              padding: 1em 0 .5em 0;
              color: $gryffindor-red;
@@ -86,8 +87,18 @@
       #profile-tab-content {
 
 
+        .profile-text {
+          width: 60%;
+          float: left;
+          margin-bottom: 1.5em;
+        }
+        .profile-image {
+          width: 40%;
+          float: left;
+          margin-bottom: 1.5em;
+          text-align: center;
         img.house-crest {
-          float: right;
+
           width: 250px;
           padding: 10px;
           background-color: $nav-resting-grey;
@@ -95,6 +106,8 @@
           border-radius: 5px;
 
         }
+
+      }
       }
       }
 

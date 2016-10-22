@@ -11,6 +11,12 @@
     .tabs-content
       #profile-tab-content.active
         .profile-text
+          .title-container
+            %h3 Name:
+          .info-container
+            %p
+              = @user.name
+        .profile-image
           %img.house-crest{:src => asset_path("gryffindor_crest.png")}
 
       #game-stats-tab-content
@@ -26,6 +32,7 @@
           %h3 Horcruxes Found:
         .info-container
           %p None yet. Keep searching!
+
 
       #account-tab-content
         .title-container
