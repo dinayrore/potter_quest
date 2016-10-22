@@ -22,18 +22,13 @@ $(document).ready(function() {
 	$('.nav-bar').on('click', '.nav-icon', function(event) {
 		event.preventDefault();
 		if (navBarShown === false) {
-		$('.option').show();
+		$('.option').slideDown();
 		navBarShown = true;
 	} else {
-		$('.option').hide();
+		$('.option').slideUp();
 		navBarShown = false;
 	}
-
 	})
-
-
-
-
 
 
 
