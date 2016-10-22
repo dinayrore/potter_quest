@@ -304,8 +304,12 @@ var potterQuest = (function() {
     if (this.score !== currentScore) {
       $('.score').text(this.score);
     }
-    // var timeDisplay = moment(0-25200000).format('hh:mm:ss');
-    // $('.timeOption').text(timeDisplay);
+    this.time += this.gameSpeed/1000;
+    var roundedTime = Math.round(this.time);
+    var numSeconds = roundedTime % 60;
+    var numMinutes = Math.floor(roundedTime / 60);
+    var numHours = Math.floor(roundedTime / 3600);
+    $('.timeOption').text(numHours + ":" + numMinutes + ":" + numSeconds);
     if (this.state !== 'init') {
       this.bounds = this.elem.getBoundingClientRect();
     }
