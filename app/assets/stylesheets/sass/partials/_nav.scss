@@ -26,9 +26,9 @@ $nav-resting-grey: #e6e7e8;
       z-index: 3;
       position: fixed;
       right: 0;
-      // display: none;
 
-  
+
+
     }
 
       ul {
@@ -44,19 +44,24 @@ $nav-resting-grey: #e6e7e8;
             font-weight: 400;
             font-size: 18px;
             line-height: 28px;
-            padding: 0.2em 0 0.2em 0;
+            width: calc(100%/5);
             transition: ease-in-out;
 
 
-            width: calc(100%/5);
             float: left;
              &:hover {
-               background-color: #fff;
+              //  background-color: #fff;
                font-size: 20px;
              }
              &:hover a {
                color: $gryffindor-gold;
              }
+
+          }
+
+          li.option {
+            display: none;
+            padding: 0.2em 0 0.2em 0;
           }
 
       }
