@@ -5,7 +5,7 @@
 -#     %meta(content="width=device-width, initial-scale=1" name="viewport")
 -#     %title Harry Potter Quest
 %body
-  %audio#potter-theme(loop preload="auto")
+  %audio#potter-theme(loop autoplay src = "#{asset_path "pottertheme.mp3"}")
   %main
     %section
       .game-container

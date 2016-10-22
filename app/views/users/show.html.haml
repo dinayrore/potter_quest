@@ -10,14 +10,18 @@
         %a{:id => "account-tab-content"} Account
     .tabs-content
       #profile-tab-content.active
+        .profile-text
+          %img.house-crest{:src => asset_path("gryffindor_crest.png")}
+
+
+
+      #games-tab-content
+      #account-tab-content
         %h3
           = @user.name
         %h3
           = @user.email
 
-
-      #games-tab-content
-      #account-tab-content
 
 
 =javascript_include_tag "vendor.min"

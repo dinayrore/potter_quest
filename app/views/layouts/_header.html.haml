@@ -1,9 +1,10 @@
 %header.nav-bar
   %ul
-    %li= link_to "Home", root_path
     %li= link_to "Profile", user_path(current_user)
     %li= link_to "Game", game_path
     %li= link_to "Leaderboard", leaderboard_path
+    %li Contribute
+    %li= link_to "Logout", logout_path, method: :delete
     %li
       .nav-icon
         %a{:href => "/"}

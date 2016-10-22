@@ -1,8 +1,9 @@
 
-  $gryffindor-red: #941B08;
+  $gryffindor-red: #ae2825;
   $gryffindor-gold: #D8B33B;
   $nav-resting-grey: #e6e7e8;
   $hogwarts-gray: #100E1B;
+
 
   #profile-page {
 
@@ -54,6 +55,8 @@
       .profile-wrap .tabs-content {
           padding: 1.5em;
           height: 60vh;
+          position: relative;
+
       }
 
       .profile-wrap .tabs-content div[id$="tab-content"] {
@@ -65,6 +68,26 @@
       }
 
 
+      #profile-tab-content {
 
 
-  }
+        img.house-crest {
+          float: right;
+          width: 250px;
+          padding: 10px;
+          // background-color: #121d3d;
+          background-color: $nav-resting-grey;
+          border: 1px solid #CFCFCF;
+          border-radius: 5px;
+
+        }
+      }
+      }
+
+      #games-tab-content {
+
+      }
+
+      #account-tab-content {
+
+      }
