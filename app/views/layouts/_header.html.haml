@@ -1,11 +1,11 @@
 %header.nav-bar
   %ul
-    %li= link_to "Profile", user_path(current_user)
-    %li= link_to "Game", game_path
-    %li= link_to "Leaderboard", leaderboard_path
-    %li Contribute
-    %li= link_to "Logout", logout_path, method: :delete
-    %li
+    %li.option= link_to "Profile", user_path(current_user)
+    %li.option= link_to "Game", game_path
+    %li.option= link_to "Leaderboard", leaderboard_path
+    %li.option= link_to "Contribute"
+    %li.option= link_to "Logout", logout_path, method: :delete
+    %li.show-hide
       .nav-icon
-        %a{:href => "/"}
+        %a{:href => ""}
           %i.material-icons menu

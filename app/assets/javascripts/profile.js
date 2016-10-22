@@ -13,4 +13,29 @@ $(document).ready(function() {
 		$('div[id$="tab-content"]').removeClass('active');
 		$('div#' + tab_content).addClass('active');
 	});
+
+
+	/** BELOW HERE IS EVENT LISTENER FOR NAVIGATION BAR */x
+
+	var navBarShown = false;
+
+	$('.nav-bar').on('click', '.nav-icon', function(event) {
+		event.preventDefault();
+		if (navBarShown === false) {
+		$('.option').show();
+		navBarShown = true;
+	} else {
+		$('.option').hide();
+		navBarShown = false;
+	}
+
+	})
+
+
+
+
+
+
+
+
 });
