@@ -27,13 +27,13 @@
         .dialog Answer
         .inventory
 
-  -# .save-game-form
-  -#   =form_for(@game) do |f|
-  -#     =f.text_field :scene, class: "saveScene",
-  -#     =f.text_field :inventory, class: "saveInventory",
-  -#     =f.text_field :score, class: "scoreForm",
-  -#     =f.text_field :time, class: "input",
-  -#     =f.submit "Sign Up", class: "button"
+  .save-game-form
+    =form_for(@game) do |f|
+      =f.text_field :scene, class: "saveScene",
+      =f.text_field :inventory, class: "saveInventory",
+      =f.text_field :score, class: "scoreForm",
+      =f.text_field :time, class: "input",
+      =f.submit "Sign Up", class: "button"
 
   =javascript_include_tag "vendor.min"
   =javascript_include_tag "game"

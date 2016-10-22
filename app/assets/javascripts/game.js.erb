@@ -320,6 +320,8 @@ var potterQuest = (function() {
       character.scene = this.state;
       this.checkCollisions();
     }
+    $('.saveScene').val(this.scene);
+    console.log($('.saveScene').val());
   }
 
   Game.prototype.checkCollisions = function() {
