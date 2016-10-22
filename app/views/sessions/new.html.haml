@@ -1,2 +1,24 @@
-%h1 Sessions#new
-%p Find me in app/views/sessions/new.html.haml
+!!! 5
+%section#profile-page
+  .profile-wrap
+    .tabs
+      %h3.profile-tab
+        %a.active{:id =>"profile-tab-content"} Profile
+      %h3.games-tab
+        %a{:id => "games-tab-content"} Games
+      %h3.account-tab
+        %a{:id => "account-tab-content"} Account
+    .tabs-content
+      #profile-tab-content.active
+        %h3
+          = @user.name
+        %h3
+          = @user.email
+
+
+      #games-tab-content
+      #account-tab-content
+
+
+=javascript_include_tag "vendor.min"
+=javascript_include_tag "profile"
