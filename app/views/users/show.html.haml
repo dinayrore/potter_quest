@@ -10,10 +10,8 @@
         %a{:id => "account-tab-content"} Account
     .tabs-content
       #profile-tab-content.active
-        %h3
-          = @user.name
-        %h3
-          = @user.email
+        .house-crest
+          %img{:src => asset_path("gryffindor_crest.png")}
 
 
       #games-tab-content

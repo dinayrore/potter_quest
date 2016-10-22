@@ -4,6 +4,7 @@
   $nav-resting-grey: #e6e7e8;
   $hogwarts-gray: #100E1B;
 
+
   #profile-page {
 
 
@@ -63,6 +64,35 @@
       .profile-wrap .tabs-content .active {
           display: block !important;
       }
+
+      #profile-tab-content {
+        .house-crest {
+
+          width: 25%;
+          background-color: #121d3d;
+          border: 1px solid #CFCFCF;
+
+        img {
+          width: 100%;
+          padding: 8px;
+
+
+        }
+      }
+      }
+
+      #games-tab-content {
+
+      }
+
+      #account-tab-content {
+
+      }
+
+
+
+
+
 
 
 
