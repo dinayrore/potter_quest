@@ -84,6 +84,7 @@ $hogwarts-gray: #100E1B;
 
     .form-wrap .tabs-content {
         padding: 1.5em;
+        padding-bottom: .5em;
     }
 
     .form-wrap .tabs-content div[id$="tab-content"] {
@@ -94,13 +95,12 @@ $hogwarts-gray: #100E1B;
         display: block !important;
     }
 
-    .form-wrap .help-text {
-        margin-top: 0.6em;
+    .form-wrap .snitch-container {
+        margin-top: 0.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .form-wrap .help-text p {
-        font-family: "Raleway";
-        text-align: center;
-        font-size: 14px;
-    }
+
 }
