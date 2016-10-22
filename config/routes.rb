@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   get  '/leaderboard', to: 'pages#leaderboard' # leaderboard (static)
   get  '/game', to: 'pages#game' # game page (static)
-  get '/users/:id', to: 'users#show' # should lead to user specific page
 
   post '/signup', to: 'users#create' # creates a user
 
