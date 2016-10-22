@@ -1,15 +1,3 @@
-var $musicTheme = $('#potter-theme');
-var playing = false;
-$musicTheme.attr('src',"<%= asset_path('pottertheme.mp4')%>");
-$musicTheme.on('canplaythrough', function() {
-  if (!playing) {
-    $musicTheme[0].currentTime = 5;
-    $musicTheme[0].play();
-    playing = true;
-  }
-});
-
-
 var potterQuest = (function() {
   var backgrounds = {
     initBackground: "<%= asset_path('game_title.png')%>",
