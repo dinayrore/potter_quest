@@ -12,13 +12,22 @@ var potterQuest = (function() {
   function Game() {
     this.elem = $('.game-container')[0];
     this.bounds = null;
+    this.initialBackgroundScale = '890% 895%';
+    this.initialPos = {
+      x: -67,
+      y: -3790
+    }
     this.sceneShift = {
-      x: 770,
+      x: 757,
       y: 590
     };
+    this.edges = {
+      right: this.initialPos.x - this.sceneShift.x * 2,
+      top: this.initialPos.y + this.sceneShift.y * 2
+    }
     this.scenePos = {
-      x: -70,
-      y: -3780
+      x: this.initialPos.x,
+      y: this.initialPos.y
     };
     this.gameSpeed = 75;
     this.state = 'init';
@@ -34,7 +43,12 @@ var potterQuest = (function() {
       show: false,
       phrase: ''
     };
+    this.inventory = {
+      show: false,
+      contents: ''
+    }
     this.pause = false;
+    this.startTime = new Date();
   }
 
   Game.prototype.init = function() {
@@ -55,12 +69,25 @@ var potterQuest = (function() {
     $('.game-container').on('click', '.startBtn', function() {
       if (self.state === 'init') {
         $('.game-container').find('.startBtn').hide();
+        $('.menu').show();
         self.state = 'swingBridge';
         self.responding.show = true;
         self.responding.phrase = "You, Harry Potter, are tasked with finding all of Lord Voldemort's horcruxes. It's a dangerous task, but you must protect the wizarding world from You-Know-Who's return.";
         $('.dialog').text(self.responding.phrase).show();
         self.addCharacter('Harry Potter', avatars.harry);
+        $(self.elem).css({
+          'background-image': 'url(' + backgrounds.fullBackground + ')',
+          'background-size': self.initialBackgroundScale,
+          'background-position': self.scenePos.x + 'px ' + self.scenePos.y + 'px'
+        });
+        self.pause = true;
       }
+    });
+    // If user clicks Inventory, show the inventory.
+    $('.game-container').on('click','.invOption', function() {
+      self.pause = true;
+      self.inventory.show = true;
+      $('.inventory').html("INVENTORY<br><br>" + self.inventory.contents).show();
     });
     // Handle key presses
     $('body').keyup(function(event) {
@@ -72,7 +99,6 @@ var potterQuest = (function() {
   }
 
   Game.prototype.run = function() {
-    this.time++;
     if (this.state !== 'init') {
       this.updateGame();
     }
@@ -81,8 +107,8 @@ var potterQuest = (function() {
   Game.prototype.checkState = function() {
     var backX = this.scenePos.x;
     var backY = this.scenePos.y;
-    var initX = -70;
-    var initY = -3780;
+    var initX = this.initialPos.x;
+    var initY = this.initialPos.y;
     if ( backX === initX && backY === initY ) {
       this.state = 'swingBridge';
     } else if ( backX === initX - this.sceneShift.x * 1 && backY === initY ) {
@@ -102,23 +128,6 @@ var potterQuest = (function() {
     } else if ( backX === initX - this.sceneShift.x * 2 && backY === initY + this.sceneShift.y * 2 ) {
       this.state = 'lake';
     }
-
-    switch (this.state) {
-      case 'init':
-        // Do nothing.
-        break;
-      case 'swingBridge':
-        this.runCloverScene();
-        break;
-    }
-  }
-
-  Game.prototype.runCloverScene = function() {
-    $(this.elem).css({
-      'background-image': 'url(' + backgrounds.fullBackground + ')',
-      'background-size': '890% 872%', //890%, 865%
-      'background-position': this.scenePos.x + 'px ' + this.scenePos.y + 'px'
-    });
   }
 
   Game.prototype.checkTyping = function(phrase) {
@@ -144,7 +153,8 @@ var potterQuest = (function() {
           if (phrase.includes('river') || phrase.includes('water')) {
             this.responding.phrase = "The river below is flowing calmly.";
           }
-        } else if (phrase.includes('take')) {
+        }
+        else if (phrase.includes('take')) {
           this.responding.phrase = "You don't need it.";
           if (phrase.includes('grass')) {
             this.responding.phrase = "Why would you carry the grass with you...?";
@@ -152,7 +162,13 @@ var potterQuest = (function() {
           if (phrase.includes('river') || phrase.includes('water')) {
             this.responding.phrase = "You can't reach the river, and you couldn't carry it anyway.";
           }
-        } else {
+          if (phrase.includes('rock')){
+            this.responding.phrase = "You reach down and pick up a smooth rock, hoping that somehow this one little pebble will help you destroy Lord Voldemort. Between you and me, it probably won't.";
+            this.inventory.contents += " Rock";
+            this.score += 5;
+          }
+        }
+        else {
           this.responding.phrase = "I don't understand that.";
         }
         break;
@@ -162,18 +178,21 @@ var potterQuest = (function() {
 
     $('.dialog').text(this.responding.phrase).show();
     this.responding.show = true;
+    this.pause = true;
   }
 
   Game.prototype.handleKeyPress = function(key) {
     switch (this.state) {
       case 'init':
-        // Do nothing.
+        if (key === 13) {
+          $('.startBtn').trigger('click');
+        }
         break;
       default:
-        if (key >= 48 && key <= 220) {
+        if (key >= 48 && key <= 220 && !this.responding.show) {
           this.pause = true;
-          this.responding.show = false;
-          $('.dialog').text("Testing").hide();
+          // this.responding.show = false;
+          // $('.dialog').text("Testing").hide();
           this.typing.show = true;
           var char = String.fromCharCode(key);
           this.typing.phrase += char;
@@ -189,8 +208,17 @@ var potterQuest = (function() {
           } else if (this.responding.show) {
             this.responding.show = false;
             $('.dialog').text("Testing").hide();
+          } else if (this.inventory.show) {
+            $('.inventory').hide();
+            this.inventory.show = false;
+          } else if ($('.invOption.active').length === 1) {
+            $('.option.active').removeClass('active');
+            this.inventory.show = true;
+            $('.inventory').html("INVENTORY<br><br>" + this.inventory.contents).show();
           }
-          this.pause = false;
+          if (!this.responding.show && !this.inventory.show) {
+            this.pause = false;
+          }
         } else if (key === 32) {
           // Space
           if (this.typing.phrase.length > 1) {
@@ -220,20 +248,49 @@ var potterQuest = (function() {
             }
             break;
           case 27:
-            this.pause = !this.pause;
+            // Escape
+            if ( $('.option.active').length === 0 ) {
+              $('.fileOption').addClass('active');
+              $('.save').addClass('active');
+              this.pause = true;
+            } else {
+              $('.option.active').removeClass('active');
+              $('.save').removeClass('active');
+              this.pause = false;
+            }
             break;
           case 37:
+            if (this.pause && $('.fileOption.active').length === 0) {
+              $('.option.active').toggleClass('active').prev('.option').toggleClass('active');
+            }
             action = (action === 'walk-left') ? 'stop' : 'walk-left';
             break;
           case 38:
+            if (this.pause && $('.fileOption.active').length === 1 && $('.save.active').length === 0) {
+              $('.fileOptions li.active').toggleClass('active').prev('li').toggleClass('active');
+            }
             action = (action === 'walk-up') ? 'stop' : 'walk-up';
             break;
           case 39:
+            if (this.pause && $('.timeOption.active').length === 0) {
+              $('.option.active').toggleClass('active').next('.option').toggleClass('active');
+            }
             action = (action === 'walk-right') ? 'stop' : 'walk-right';
             break;
           case 40:
+            if (this.pause && $('.fileOption.active').length === 1 && $('.restore.active').length === 0) {
+              $('.fileOptions li.active').toggleClass('active').next('li').toggleClass('active');
+            }
             action = (action === 'walk-down') ? 'stop' : 'walk-down';
             break;
+          case 191:
+            // Forward slash
+            if (!this.typing.show && !this.responding.show) {
+              this.pause = true;
+              this.inventory.show = true;
+              $('.inventory').html("INVENTORY<br><br>" + this.inventory.contents).show();
+              break;
+            }
         }
         if (this.pause) {
           action = 'stop';
@@ -243,6 +300,12 @@ var potterQuest = (function() {
   }
 
   Game.prototype.updateGame = function() {
+    var currentScore = $('.score').text();
+    if (this.score !== currentScore) {
+      $('.score').text(this.score);
+    }
+    // var timeDisplay = moment(0-25200000).format('hh:mm:ss');
+    // $('.timeOption').text(timeDisplay);
     if (this.state !== 'init') {
       this.bounds = this.elem.getBoundingClientRect();
     }
@@ -250,6 +313,7 @@ var potterQuest = (function() {
     for (var index = 0; index < allCharacters.length; index++) {
       var character = allCharacters[index];
       character.updateCharacter();
+      character.scene = this.state;
       this.checkCollisions();
     }
   }
@@ -278,14 +342,14 @@ var potterQuest = (function() {
       character.y = 0;
       this.scenePos.y = this.scenePos.y - this.sceneShift.y;
     }
-    if (this.scenePos.x > -70) {
-      this.scenePos.x = -1610;
-    } else if (this.scenePos.x < -1610) {
-      this.scenePos.x = -70;
-    } else if (this.scenePos.y > -2600) {
-      this.scenePos.y = -3780;
-    } else if (this.scenePos.y < -3780) {
-      this.scenePos.y = -2600;
+    if (this.scenePos.x > this.initialPos.x) {
+      this.scenePos.x = this.edges.right;
+    } else if (this.scenePos.x < this.edges.right) {
+      this.scenePos.x = this.initialPos.x;
+    } else if (this.scenePos.y > this.edges.top) {
+      this.scenePos.y = this.initialPos.y;
+    } else if (this.scenePos.y < this.initialPos.y) {
+      this.scenePos.y = this.edges.top;
     }
     $(this.elem).css({
       'background-position': this.scenePos.x + 'px ' + this.scenePos.y + 'px'
@@ -316,6 +380,7 @@ var potterQuest = (function() {
     this.backY = 0;
     this.speed = 20;
     this.action = 'stand';
+    this.scene = 'init';
   }
 
   Character.prototype.create = function() {
@@ -374,6 +439,14 @@ var potterQuest = (function() {
     down: function(self) {
       self.y += self.speed;
     }
+  }
+
+  Character.prototype.canMoveUp = function(scene) {
+    var canMove = true;
+    if (scene === 'oldMan') {
+      canMove = false;
+    }
+    return canMove;
   }
 
   Character.prototype.draw = function(action) {
