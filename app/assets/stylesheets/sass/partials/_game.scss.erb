@@ -41,6 +41,70 @@ section {
   box-shadow: 10px 10px 50px white;
   overflow: hidden;
 
+  .menu {
+    display: none;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 100%;
+    background: white;
+    border: 3px solid black;
+    font-family: PCSenior;
+    font-size: 15px;
+    box-sizing: border-box;
+    .options {
+      display: flex;
+      list-style: none;
+      height: 100%;
+      .option {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        height: 100%;
+        &.fileOption {
+          position: relative;
+          width: 15%;
+          overflow: hidden;
+          .fileOptions {
+            position: absolute;
+            width: 120%;
+            top: 100%;
+            left: 0;
+            list-style: none;
+            li {
+              display: flex;
+              align-items: center;
+              padding-left: 10px;
+              height: 30px;
+              background: white;
+              color: black;
+              &:hover, &.active {
+                background: black;
+                color: white;
+              }
+            }
+          }
+        }
+        &.invOption {
+          width: 25%;
+        }
+        &.scoreOption {
+          width: 35%;
+        }
+        &.timeOption {
+          width: 25%;
+        }
+        &.active, &:hover {
+          background: black;
+          color: white;
+          overflow: visible;
+        }
+      }
+    }
+  }
+
   .startBtn {
     padding: 20px;
     font-family: Potter;
@@ -53,7 +117,7 @@ section {
     outline-style: none;
   }
 
-  .typing, .dialog {
+  .typing, .dialog, .inventory {
     z-index: 10;
     display: none;
     padding: 10px;
@@ -67,5 +131,13 @@ section {
     max-width: 80%;
     max-height: 70%;
     overflow: scroll;
+    &.inventory {
+      width: 50%;
+      height: 80%;
+    }
   }
+}
+
+.save-game-form {
+  display: none;
 }

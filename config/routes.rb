@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get  '/leaderboard', to: 'pages#leaderboard' # leaderboard (static)
   get  '/game', to: 'pages#game' # game page (static)
+  # post '/savegame', to: 'games#create'
 
   post '/signup', to: 'users#create' # creates a user
 
@@ -11,4 +12,5 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy' # destroy session
 
   resources :users
+  resources :games
 end

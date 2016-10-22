@@ -10,9 +10,31 @@
     %section
       .game-container
         %header.menu
+          %ul.options
+            %li.fileOption.option
+              File
+              %ul.fileOptions
+                %li.save Save
+                %li.restore Restore
+            %li.invOption.option Inventory
+            %li.scoreOption.option
+              Score:
+              %span.score 0
+              &nbsp;of 20
+            %li.timeOption.option Time:
         %button(class='startBtn') Play Game
         .typing
         .dialog Answer
+        .inventory
+
+  -# .save-game-form
+  -#   =form_for(@game) do |f|
+  -#     =f.text_field :user_id, class: "saveUserId",
+  -#     =f.text_field :scene, class: "saveScene",
+  -#     =f.text_field :inventory, class: "saveInventory",
+  -#     =f.text_field :score, class: "saveScore",
+  -#     =f.text_field :time, class: "saveTime",
+  -#     =f.submit "Save Game", class: "saveButton"
 
   =javascript_include_tag "vendor.min"
   =javascript_include_tag "game"
