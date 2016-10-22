@@ -56,9 +56,23 @@
           padding: 1.5em;
           height: 60vh;
           position: relative;
-          font-family: "Raleway"
+          font-family: "Raleway";
+          display: block;
+            .title-container {
+             padding: 1em 0 .5em 0;
+             color: $gryffindor-red;
+            }
+            .info-container {
+              padding-left: 1.5em;
+              p {
+                font-family: sans-serif;
+
+                font-size: 18px;
+                  color: #666;
+            }
 
       }
+    }
 
       .profile-wrap .tabs-content div[id$="tab-content"] {
           display: none;
@@ -76,7 +90,6 @@
           float: right;
           width: 250px;
           padding: 10px;
-          // background-color: #121d3d;
           background-color: $nav-resting-grey;
           border: 1px solid #CFCFCF;
           border-radius: 5px;
