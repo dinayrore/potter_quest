@@ -10,41 +10,51 @@
         %a{:id => "account-tab-content"} Account
     .tabs-content
       #profile-tab-content.active
-        .profile-text
+        .content-text
           .title-container
             %h3 Name:
           .info-container
             %p
               = @user.name
-        .profile-image
+          .title-container
+            %h3 House:
+          .info-container
+            %p
+              = @user.house
+            %p Gryffindor
+        .content-image
           %img.house-crest{:src => asset_path("gryffindor_crest.png")}
 
       #game-stats-tab-content
-        .title-container
-          %h3 Current Score:
-        .info-container
-          %p 0
-        .title-container
-          %h3 Current Level:
-        .info-container
-          %p Level 1
-        .title-container
-          %h3 Horcruxes Found:
-        .info-container
-          %p None yet. Keep searching!
-
+        .content-text
+          .title-container
+            %h3 Current Score:
+          .info-container
+            %p 0
+          .title-container
+            %h3 Current Level:
+          .info-container
+            %p Level 1
+          .title-container
+            %h3 Horcruxes Found:
+          .info-container
+            %p None yet. Keep searching!
+        .content-image
+          %img.flags{:src => asset_path("flags.png")}
 
       #account-tab-content
-        .title-container
-          %h3 Name:
-        .info-container
-          %p
-            = @user.name
-        .title-container
-          %h3 Email:
-        .info-container
-          %p
-            = @user.email
+        .content-text
+          .title-container
+            %h3 Name:
+          .info-container
+            %p
+              = @user.name
+          .title-container
+            %h3 Email:
+          .info-container
+            %p
+              = @user.email
+        .content-image
 
 
 
