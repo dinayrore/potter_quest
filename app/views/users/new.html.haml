@@ -14,16 +14,16 @@
             -# =f.select_tag( :house, options_for_select([['Gryffindor', 'gryffindor_crest'], ['Ravenclaw', 'ravenclaw_crest']]))
             =f.password_field :password, class: "input", placeholder: "Password"
             =f.submit "Sign Up", class: "button"
-          .help-text
-            %p Don't worry, the Sorting Hat will choose your house later!
+          .snitch-container
+            %img.snitch{:src => asset_path("golden_snitch.gif")}
       #login-tab-content
         .login-form
           =form_for(:session, url: login_path) do |f|
             =f.email_field :email, class: "input", placeholder: "Email"
             =f.password_field :password, class: "input", placeholder: "Password"
             =f.submit "Login", class: "button"
-        .help-text
-          %p Welcome back to Hogwart's!
+        .snitch-container
+          %img.snitch{:src => asset_path("golden_snitch.gif")}
 
 =javascript_include_tag "vendor.min"
 =javascript_include_tag "login"
