@@ -12,6 +12,12 @@ $large-radius: 20px;
   font-family: Potter;
   src: url("<%= asset_path('HARRYP__.TTF')%>");
 }
+@font-face {
+  font-family: PCSenior;
+  src: url("<%= asset_path('pcsenior.ttf')%>");
+}
+
+
 
 section {
   height: 100vh;
@@ -48,28 +54,18 @@ section {
   }
 
   .typing, .dialog {
+    z-index: 10;
     display: none;
-    padding: 20px;
-    font-family: Arial;
-    background: black;
-    color: $hogwarts-gold;
-    font-size: 30px;
-    border: 3px solid $hogwarts-gold;
-    border-radius: $large-radius;
+    padding: 10px;
+    font-family: PCSenior;
+    background: white;
+    color: black;
+    font-size: 20px;
+    border: 3px solid black;
+    border-radius: 0;
     outline-style: none;
+    max-width: 80%;
+    max-height: 70%;
+    overflow: scroll;
   }
 }
-
-// // Canvase testing
-// #game-canvas {
-//   display: none;
-//   background: $full-background;
-//   border: 6px solid black;
-//   border-radius: $default-radius;
-//   box-shadow: 10px 10px 50px white;
-//   overflow: hidden;
-// }
-
-// .full-background {
-//   display: none;
-// }
