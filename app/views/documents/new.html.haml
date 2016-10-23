@@ -1,11 +1,14 @@
-%h1 New document
-= form_for(@document) do |f|
-  .field
-    = f.file_field :file
-  .actions
-    = f.submit
+!!! 5
+%html(lang='en')
+  %section#login-page
+    %h1 New document
+    = form_for(@document) do |f|
+      .field
+        = f.file_field :file
+      .actions
+        = f.submit
 
-
+-# this may need to be in its own section...
 %h2 Listing documents
 %table
   %thead

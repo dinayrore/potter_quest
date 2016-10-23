@@ -7,7 +7,7 @@
 %body
   %audio#potter-theme(loop autoplay src = "#{asset_path "pottertheme.mp3"}")
   %main
-    %section
+    %section.game-page
       .game-container
         %header.menu
           %ul.options
@@ -26,15 +26,16 @@
         .typing
         .dialog Answer
         .inventory
+      .save-game-form
+        =form_for(@game) do |f|
+          =f.text_field :user_id, class: "saveUserId", value: session[:user_id]
+          =f.text_field :scene, class: "saveScene", value: 'init'
+          =f.text_field :inventory, class: "saveInventory", value: ''
+          =f.text_field :score, class: "saveScore", value: 0
+          =f.text_field :time, class: "saveTime", value: 0
+          =f.submit "Save Game", class: "saveBtn"
 
-  -# .save-game-form
-  -#   =form_for(@game) do |f|
-  -#     =f.text_field :user_id, class: "saveUserId",
-  -#     =f.text_field :scene, class: "saveScene",
-  -#     =f.text_field :inventory, class: "saveInventory",
-  -#     =f.text_field :score, class: "saveScore",
-  -#     =f.text_field :time, class: "saveTime",
-  -#     =f.submit "Save Game", class: "saveButton"
+
 
   =javascript_include_tag "vendor.min"
   =javascript_include_tag "game"

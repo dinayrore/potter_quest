@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   root 'users#new' # login/signup
 
   get  '/leaderboard', to: 'pages#leaderboard' # leaderboard (static)
-  get  '/game', to: 'pages#game' # game page (static)
   get '/document', to: 'documents#new'
+  get  '/game', to: 'games#new' # game page
 
   post '/signup', to: 'users#create' # creates a user
   post '/game', to: 'games#create'
