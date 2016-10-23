@@ -215,6 +215,8 @@ var potterQuest = (function() {
             $('.option.active').removeClass('active');
             this.inventory.show = true;
             $('.inventory').html("INVENTORY<br><br>" + this.inventory.contents).show();
+          } else if ($('.save.active').length === 1) {
+            $('.saveBtn').trigger('click');
           }
           if (!this.responding.show && !this.inventory.show) {
             this.pause = false;
@@ -305,10 +307,10 @@ var potterQuest = (function() {
       $('.score').text(this.score);
     }
     this.time += this.gameSpeed/1000;
-    var roundedTime = Math.round(this.time);
-    var numSeconds = roundedTime % 60;
-    var numMinutes = Math.floor(roundedTime / 60);
-    var numHours = Math.floor(roundedTime / 3600);
+    this.roundedTime = Math.round(this.time);
+    var numSeconds = this.roundedTime % 60;
+    var numMinutes = Math.floor(this.roundedTime / 60);
+    var numHours = Math.floor(this.roundedTime / 3600);
     $('.timeOption').text(numHours + ":" + numMinutes + ":" + numSeconds);
     if (this.state !== 'init') {
       this.bounds = this.elem.getBoundingClientRect();
@@ -320,31 +322,11 @@ var potterQuest = (function() {
       character.scene = this.state;
       this.checkCollisions();
     }
-    // console.log("Test");
-    // $.ajax({
-    //   'url': '/games',
-    //   'type': 'POST',
-    //   'data': {
-    //     'user_id': '1',
-    //     'scene': this.state,
-    //     'inventory': this.inventory.contents,
-    //     'score': this.score,
-    //     'time': this.time
-    //   },
-    //   'success': function(response) {
-    //     console.log(response);
-    //   },
-    //   'error': function(error) {
-    //     // console.log(error);
-    //   }
-    // });
-    // $('.saveUserId').val(0);
-    // $('.saveScene').val(this.scene);
-    // $('.saveInventory').val(this.inventory.contents);
-    // $('.saveScore').val(this.score);
-    // $('.saveTime').val(this.time);
-    // $('.saveButton').trigger('submit');
-    // console.log($('.saveScene').val());
+
+    $('.saveScene').val(this.state);
+    $('.saveInventory').val(this.inventory.contents);
+    $('.saveScore').val(this.score);
+    $('.saveTime').val(this.roundedTime);
   }
 
   Game.prototype.checkCollisions = function() {

@@ -15,12 +15,28 @@ ActiveRecord::Schema.define(version: 5) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "games", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "scene"
+    t.string   "inventory"
+    t.integer  "score"
+    t.integer  "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inventory"], name: "index_games_on_inventory", using: :btree
+    t.index ["scene"], name: "index_games_on_scene", using: :btree
+    t.index ["score"], name: "index_games_on_score", using: :btree
+    t.index ["time"], name: "index_games_on_time", using: :btree
+    t.index ["user_id"], name: "index_games_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
+    t.string   "house"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
