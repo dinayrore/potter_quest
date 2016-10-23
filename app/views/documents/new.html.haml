@@ -1,0 +1,21 @@
+%h1 New document
+= form_for(@document) do |f|
+  .field
+    = f.file_field :file
+  .actions
+    = f.submit
+
+
+%h2 Listing documents
+%table
+  %thead
+    %tr
+      %th Filename
+      %th
+      %th
+  %tbody
+    -# - @documents.each do |document|
+      %tr
+        %td= document.filename
+        %td= button_to 'Download', document, method: :get
+%br/
