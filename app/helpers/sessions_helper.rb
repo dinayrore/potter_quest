@@ -5,6 +5,13 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
+  def save_data(game)
+    session[:scene] = game.scene
+    session[:inventory] = game.inventory
+    session[:score] = game.score
+    session[:time] = game.time
+  end
+
   # Returns true if the given user is the current user.
   def current_user?(user)
     user == current_user

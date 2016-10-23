@@ -49,6 +49,17 @@ var potterQuest = (function() {
     }
     this.pause = false;
     this.startTime = new Date();
+    this.restored = false;
+
+    // Check for restored info
+    if (parseInt($('.savedTime').text()) > 0 ) {
+      console.log(parseInt($('.savedTime').text()), this.scene);
+      this.scene = $('.savedScene').text();
+      this.inventory.contents = $('.savedInv').text();
+      this.score = parseInt($('.savedScore').text());
+      this.time = parseInt($('.savedTime').text());
+      this.restored = true;
+    }
   }
 
   Game.prototype.init = function() {
@@ -72,7 +83,11 @@ var potterQuest = (function() {
         $('.menu').show();
         self.state = 'swingBridge';
         self.responding.show = true;
-        self.responding.phrase = "You, Harry Potter, are tasked with finding all of Lord Voldemort's horcruxes. It's a dangerous task, but you must protect the wizarding world from You-Know-Who's return.";
+        if (!self.restored) {
+          self.responding.phrase = "You, Harry Potter, are tasked with finding all of Lord Voldemort's horcruxes. It's a dangerous task, but you must protect the wizarding world from You-Know-Who's return.";
+        } else {
+          self.responding.phrase = "Welcome back!";
+        }
         $('.dialog').text(self.responding.phrase).show();
         self.addCharacter('Harry Potter', avatars.harry);
         $(self.elem).css({
@@ -83,6 +98,12 @@ var potterQuest = (function() {
         self.pause = true;
       }
     });
+
+    // If user clicks save button in menu, save the game.
+    $('.game-container').on('click', '.invOption', function() {
+      $('.saveBtn').trigger('click');
+    });
+
     // If user clicks Inventory, show the inventory.
     $('.game-container').on('click','.invOption', function() {
       self.pause = true;
@@ -189,15 +210,14 @@ var potterQuest = (function() {
         }
         break;
       default:
-        if (key >= 48 && key <= 220 && !this.responding.show) {
+        if (key >= 48 && key <= 220 && !this.responding.show && $('.active').length === 0) {
           this.pause = true;
-          // this.responding.show = false;
-          // $('.dialog').text("Testing").hide();
           this.typing.show = true;
           var char = String.fromCharCode(key);
           this.typing.phrase += char;
           $('.typing').text(this.typing.phrase).show();
-        } else if (key === 13) {
+        }
+        else if (key === 13) {
           // Enter
           if (this.typing.show) {
             this.typing.show = false;
@@ -218,10 +238,11 @@ var potterQuest = (function() {
           } else if ($('.save.active').length === 1) {
             $('.saveBtn').trigger('click');
           }
-          if (!this.responding.show && !this.inventory.show) {
+          if (!this.responding.show && !this.inventory.show && $('.active').length === 0) {
             this.pause = false;
           }
-        } else if (key === 32) {
+        }
+        else if (key === 32) {
           // Space
           if (this.typing.phrase.length > 1) {
             this.typing.phrase += ' ';
@@ -287,7 +308,7 @@ var potterQuest = (function() {
             break;
           case 191:
             // Forward slash
-            if (!this.typing.show && !this.responding.show) {
+            if (!this.typing.show && !this.responding.show  && $('.active').length === 0) {
               this.pause = true;
               this.inventory.show = true;
               $('.inventory').html("INVENTORY<br><br>" + this.inventory.contents).show();

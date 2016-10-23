@@ -35,6 +35,17 @@
           =f.text_field :time, class: "saveTime", value: 0
           =f.submit "Save Game", class: "saveBtn"
 
+      .current
+        .savedId
+          = session[:user_id]
+        .savedScene
+          = session[:scene]
+        .savedInv
+          = session[:inventory]
+        .savedScore
+          = session[:score]
+        .savedTime
+          = session[:time]
 
 
   =javascript_include_tag "vendor.min"
