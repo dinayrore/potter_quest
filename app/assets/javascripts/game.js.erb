@@ -154,47 +154,438 @@ var potterQuest = (function() {
   Game.prototype.checkTyping = function(phrase) {
     var scene = this.state;
     phrase = phrase.toLowerCase();
+    var pockets = this.inventory.contents.toLowerCase();
     switch (scene) {
       case 'init':
         // Do nothing
         break;
       case 'swingBridge':
-        // Looking around
-        if (phrase.includes('look')) {
-          this.responding.phrase = "You are standing near a bridge, and you see a tall tree in the distance. There is a tall mountain range blocking your path to the west and south. You hope there is a horcrux to destroy somewhere...but even if you find it, how will you destroy it?";
-          if (phrase.includes('tree')) {
-            this.responding.phrase = "The tree is a normal tree.";
-          }
-          if (phrase.includes('grass')) {
-            this.responding.phrase = "The grass is green, but it seems like the whole world is darker while You-Know-Who still lives.";
-          }
-          if (phrase.includes('bridge')) {
-            this.responding.phrase = "The wooden bridge looks old, but safe.";
-          }
-          if (phrase.includes('river') || phrase.includes('water')) {
-            this.responding.phrase = "The river below is flowing calmly.";
-          }
-        }
-        else if (phrase.includes('take')) {
-          this.responding.phrase = "You don't need it.";
-          if (phrase.includes('grass')) {
-            this.responding.phrase = "Why would you carry the grass with you...?";
-          }
-          if (phrase.includes('river') || phrase.includes('water')) {
-            this.responding.phrase = "You can't reach the river, and you couldn't carry it anyway.";
-          }
-          if (phrase.includes('rock')){
-            this.responding.phrase = "You reach down and pick up a smooth rock, hoping that somehow this one little pebble will help you destroy Lord Voldemort. Between you and me, it probably won't.";
-            this.inventory.contents += " Rock";
-            this.score += 5;
-          }
-        }
-        else {
-          this.responding.phrase = "I don't understand that.";
-        }
-        break;
+            if (phrase.includes('look')) {
+                  this.responding.phrase = "You are standing near a bridge, and you see a tall tree in the distance. There is a tall mountain range blocking your path to the west and south. You hope there is a horcrux to destroy somewhere...but even if you find it, how will you destroy it?";
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "The tree is a normal tree.";
+                  }
+                  if (phrase.includes('flower')) {
+                    if (pockets.includes('flower')) {
+                      this.responding.phrase = "The flower you picked is very lovely, and it even still has its roots. Perfect if you wanted to start your own garden."
+                    } else {
+                      this.responding.phrase = "There aren't any flowers here.";
+                    }
+                  }
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "The grass is green, but it seems like the whole world is darker while You-Know-Who still lives.";
+                  }
+                  if (phrase.includes('bridge')) {
+                    this.responding.phrase = "The wooden bridge looks old, but safe.";
+                  }
+                  if (phrase.includes('river') || phrase.includes('water') || phrase.includes('ravine') || phrase.includes('gorge') || phrase.includes('cliff')) {
+                    this.responding.phrase = "The river below is flowing calmly.";
+                  }
+                  if (phrase.includes('sky')) {
+                    this.responding.phrase = "No dark marks in the sky. That's always good.";
+                  }
+                  if (phrase.includes('ground')) {
+                    this.responding.phrase = "The ground is mostly covered with grass, but there are some rocks, too.";
+                  }
+                  if (phrase.includes('bush')) {
+                    this.responding.phrase = "You look around in the bush...but alas, no horcruxes.";
+                  }
+                  if (phrase.includes('rock')) {
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "The rock you are carrying is a regular smooth rock. Perfect for defeating evil."
+                    } else {
+                      this.responding.phrase = "There are some smooth rocks on the ground here.";
+                    }
+                  }
+            }
+            else if (phrase.includes('take')) {
+                  this.responding.phrase = "You don't need it.";
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "Why would you carry the grass with you...?";
+                  }
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "There's no way you can carry a whole tree, at least not without Hermione's bag."
+                  }
+                  if (phrase.includes('river') || phrase.includes('water')) {
+                    this.responding.phrase = "You can't reach the river, and you couldn't carry it anyway.";
+                  }
+                  if (phrase.includes('rock')){
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "You already have a rock. No need to carry around a whole bucket of them.";
+                    } else {
+                      this.responding.phrase = "You reach down and pick up a smooth rock, hoping that somehow this one little pebble will help you destroy Lord Voldemort. Between you and me, it probably won't.";
+                      this.inventory.contents += "Rock<br>";
+                      this.score += 5;
+                    }
+                  }
+            }
+            else if (phrase.includes('wingardium leviosa') || phrase.includes('expelliarmus') || phrase.includes('lumos') || phrase.includes('nox') || phrase.includes('stupefy') || phrase.includes('confundo')) {
+                  this.responding.phrase = "Practicing magic is great, but you've got a horcrux to find.";
+            }
+            else {
+                  this.responding.phrase = "I don't understand that.";
+            }
+            break;
+      case 'stump':
+            if (phrase.includes('look')) {
+                  this.responding.phrase = "The river turns north here, and as you look around you just see more grass, rocks, trees, and an old stump.";
+                  if (phrase.includes('sword')) {
+                    if (pockets.includes('sword')) {
+                      this.responding.phrase = "The sword is hefty, but not too heavy. You remember when you used it to kill the basilisk, and how generally unpleasant that was.";
+                    } else {
+                      this.responding.phrase = "What sword?";
+                    }
+                  }
+                  if (phrase.includes('flower')) {
+                    if (pockets.includes('flower')) {
+                      this.responding.phrase = "The flower you picked is very lovely, and it even still has its roots. Perfect if you wanted to start your own garden."
+                    } else {
+                      this.responding.phrase = "There aren't any flowers here.";
+                    }
+                  }
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "The trees are all normal trees here.";
+                  }
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "The grass is green, but it seems like the whole world is darker while You-Know-Who still lives.";
+                  }
+                  if (phrase.includes('river') || phrase.includes('water') || phrase.includes('ravine') || phrase.includes('gorge') || phrase.includes('cliff')) {
+                    this.responding.phrase = "The river below is flowing calmly.";
+                  }
+                  if (phrase.includes('sky')) {
+                    this.responding.phrase = "No dark marks in the sky. That's always good.";
+                  }
+                  if (phrase.includes('ground')) {
+                    this.responding.phrase = "The ground is mostly covered with grass, but there are some rocks, too.";
+                  }
+                  if (phrase.includes('bush')) {
+                    this.responding.phrase = "You look around in the bush...but alas, no horcruxes.";
+                  }
+                  if (phrase.includes('rock')) {
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "The rock you are carrying is a regular smooth rock. Perfect for defeating evil.";
+                    } else {
+                      this.responding.phrase = "There are some smooth rocks on the ground here.";
+                    }
+                  }
+                  if (phrase.includes('stump')) {
+                    this.responding.phrase = "The old stump has a hole in it.";
+                  }
+                  if (phrase.includes('hole')) {
+                    if (pockets.includes('sword')) {
+                      this.responding.phrase = "There's nothing else in the hole.";
+                    } else {
+                      this.responding.phrase = "You think there is something shiny way back there.";
+                    }
+                  }
+            }
+            else if (phrase.includes('take')) {
+                  this.responding.phrase = "You don't need it.";
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "Why would you carry the grass with you...?";
+                  }
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "There's no way you can carry a whole tree, at least not without Hermione's bag.";
+                  }
+                  if (phrase.includes('river') || phrase.includes('water')) {
+                    this.responding.phrase = "You can't reach the river, and you couldn't carry it anyway.";
+                  }
+                  if (phrase.includes('stump')) {
+                    this.responding.phrase = "What would you want with an old stump?";
+                  }
+                  if (phrase.includes('rock')){
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "You already have a rock. No need to carry around a whole bucket of them.";
+                    } else {
+                      this.responding.phrase = "You reach down and pick up a smooth rock, hoping that somehow this one little pebble will help you destroy Lord Voldemort. Between you and me, it probably won't.";
+                      this.inventory.contents += "Rock<br>";
+                      this.score += 5;
+                    }
+                  }
+            }
+            else if (phrase.includes('reach') || phrase.includes('examine') || phrase.includes('stretch') || phrase.includes('search')) {
+                  this.responding.show = "What are you trying to look in, exactly?";
+                  if (phrase.includes('hole') || phrase.includes('stump')) {
+                    if (pockets.includes('sword')) {
+                      this.responding.phrase = "There's nothing else in the hole.";
+                    } else {
+                      this.responding.phrase = 'You reach way down into the hole to find...the Sword of Gryffindor! Professor Dumbledore always said help would come to those who asked for it. Or deserved it. Or something.';
+                      this.inventory.contents += "Sword of Gryffindor<br>";
+                      this.score += 5;
+                    }
+                  }
+            }
+            else if (phrase.includes('wingardium leviosa') || phrase.includes('expelliarmus') || phrase.includes('lumos') || phrase.includes('nox') || phrase.includes('stupefy') || phrase.includes('confundo')) {
+                  this.responding.phrase = "Practicing magic is great, but you've got a horcrux to find.";
+            }
+            else {
+                  this.responding.phrase = "I don't understand that.";
+            }
+            break;
+      case 'field':
+            this.responding.phrase = "There is literally nothing to do here. You might as well move along. Come back once we've added more to the game!";
+            break;
+      case 'oldMan':
+            if (phrase.includes('look')) {
+                  this.responding.phrase = "This seems to be the home, if you can call it that, of an old man. You assume he's a muggle, by the fact that he is struggling quite a bit with his gardening.";
+                  if (phrase.includes('sword')) {
+                    if (pockets.includes('sword')) {
+                      this.responding.phrase = "The sword is hefty, but not too heavy. You remember when you used it to kill the basilisk, and how generally unpleasant that was.";
+                    } else {
+                      this.responding.phrase = "What sword?";
+                    }
+                  }
+                  if (phrase.includes('flower')) {
+                    if (pockets.includes('flower')) {
+                      this.responding.phrase = "The flower you picked is very lovely, and it even still has its roots. Perfect if you wanted to start your own garden."
+                    } else {
+                      this.responding.phrase = "There aren't any flowers here.";
+                    }
+                  }
+                  if (phrase.includes('man')) {
+                    this.responding.phrase = "The man looks quite old, indeed. It looks like he has lived here a long time. Maybe his knowledge of the area could help you find this horcrux...";
+                  }
+                  if (phrase.includes('hay')) {
+                    this.responding.phrase = "There's no needle, if that's what you're looking for.";
+                  }
+                  if (phrase.includes('house') || phrase.includes('home') || phrase.includes('hut') || phrase.includes('shack')) {
+                    this.responding.phrase = "The house is barely a house. It's more like a haystack on sticks.";
+                  }
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "The tree is a normal tree.";
+                  }
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "The grass is green, but it seems like the whole world is darker while You-Know-Who still lives.";
+                  }
+                  if (phrase.includes('river') || phrase.includes('water') || phrase.includes('ravine') || phrase.includes('gorge') || phrase.includes('cliff')) {
+                    this.responding.phrase = "The river below is flowing calmly.";
+                  }
+                  if (phrase.includes('sky')) {
+                    this.responding.phrase = "No dark marks in the sky. That's always good.";
+                  }
+                  if (phrase.includes('ground') || phrase.includes('garden') || phrase.includes('flower')) {
+                    this.responding.phrase = "The man looks like he's trying to plant some flowers, but the ground seems to be completely dead. He might not be a very good gardener.";
+                  }
+                  if (phrase.includes('bush')) {
+                    this.responding.phrase = "You look around in the bush...but alas, no horcruxes.";
+                  }
+                  if (phrase.includes('rock')) {
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "The rock you are carrying is a regular smooth rock. Perfect for defeating evil."
+                    } else {
+                      this.responding.phrase = "There are some boulders around here, but nothing very interesting.";
+                    }
+                  }
+            }
+            else if (phrase.includes('give')) {
+                  this.responding.phrase = "You can't do that.";
+                  if (phrase.includes('flower')) {
+                    if (pockets.includes('flower')) {
+                      this.responding.phrase = "Who do you want to give the flower to?";
+                      if (phrase.includes('man')) {
+                        this.inventory.contents = this.inventory.contents.slice(0, pockets.indexOf('flower')) + this.inventory.contents.slice((pockets.indexOf('flower') + 10));
+                        this.responding.phrase = '"Why, thank you, young man! This is exactly what I need to help get my garden started!"';
+                        this.score += 5;
+                        this.gaveFlowerToMan = true;
+                      }
+                    } else {
+                      this.responding.phrase = "You don't have a flower.";
+                    }
+                  }
+            }
+            else if (phrase.includes('take')) {
+                  this.responding.phrase = "You don't need it."
+            }
+            else if (phrase.includes('talk')) {
+                  this.responding.phrase = "Not a very exciting conversation.";
+                  if (phrase.includes('man') && this.gaveFlowerToMan) {
+                    this.responding.phrase = '"I always get an eerie feeling when I\'m skipping rocks in the lake beyond the stone bridge. Strange place, that."';
+                  } else if (phrase.includes('man')) {
+                    this.responding.phrase = '"Young whippersnapper! Leave me alone! I\'ve got to work on my garden!"';
+                  }
+            }
+            else if (phrase.includes('wingardium leviosa') || phrase.includes('expelliarmus') || phrase.includes('lumos') || phrase.includes('nox') || phrase.includes('stupefy') || phrase.includes('confundo')) {
+                  this.responding.phrase = "Practicing magic is great, but you've got a horcrux to find.";
+            }
+            else {
+                  this.responding.phrase = "I don't understand that.";
+            }
+            break;
+      case 'horizBridge':
+            this.responding.phrase = "Yeah, there's nothing here, either. Again - come back when we've added more to the game!";
+            break;
+      case 'verticalBridge':
+            this.responding.phrase = "Yeah, there's nothing here, either. Again - come back when we've added more to the game!";
+            break;
+      case 'stoneBridge':
+            this.responding.phrase = "Yeah, there's nothing here, either. Again - come back when we've added more to the game!";
+            break;
+      case 'flowers':
+            if (phrase.includes('look')) {
+                  this.responding.phrase = "You're standing in a clearing, and there are some wildflowers growing here.";
+                  if (phrase.includes('sword')) {
+                    if (pockets.includes('sword')) {
+                      this.responding.phrase = "The sword is hefty, but not too heavy. You remember when you used it to kill the basilisk, and how generally unpleasant that was.";
+                    } else {
+                      this.responding.phrase = "What sword?";
+                    }
+                  }
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "The trees are all normal trees here.";
+                  }
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "The grass is green, but it seems like the whole world is darker while You-Know-Who still lives.";
+                  }
+                  if (phrase.includes('river') || phrase.includes('water') || phrase.includes('ravine') || phrase.includes('gorge') || phrase.includes('cliff')) {
+                    this.responding.phrase = "You can't see the river from here.";
+                  }
+                  if (phrase.includes('sky')) {
+                    this.responding.phrase = "No dark marks in the sky. That's always good.";
+                  }
+                  if (phrase.includes('ground')) {
+                    this.responding.phrase = "There are some flowers growing here.";
+                  }
+                  if (phrase.includes('bush')) {
+                    this.responding.phrase = "There's no bush here.";
+                  }
+                  if (phrase.includes('flower')) {
+                    if (pockets.includes('flower')) {
+                      this.responding.phrase = "The flower you picked is very lovely, and it even still has its roots. Perfect if you wanted to start your own garden."
+                    } else {
+                      this.responding.phrase = "The flowers look very nice.";
+                    }
+                  }
+                  if (phrase.includes('rock')) {
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "The rock you are carrying is a regular smooth rock. Perfect for defeating evil.";
+                    } else {
+                      this.responding.phrase = "There are some larger rocks here, but none that are very interesting.";
+                    }
+                  }
+            }
+            else if (phrase.includes('take') || phrase.includes('pick')) {
+                  this.responding.phrase = "You don't need it.";
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "Why would you carry the grass with you...?";
+                  }
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "There's no way you can carry a whole tree, at least not without Hermione's bag.";
+                  }
+                  if (phrase.includes('flower')) {
+                    if (pockets.includes('flower')) {
+                      this.responding.phrase = "You like the flower you have.";
+                    } else {
+                      this.responding.phrase = "You pick one of the best looking flowers and decide to carry it with you on your journey. Maybe it will cheer you up along the way.";
+                      this.score += 5;
+                      this.inventory.contents += "Flower<br>"
+                    }
+                  }
+            }
+            else if (phrase.includes('smell')) {
+                  this.responding.phrase = "You don't smell anything.";
+                  if (phrase.includes('flower')) {
+                    this.responding.phrase = "The flowers smell very nice.";
+                  }
+            }
+            else if (phrase.includes('wingardium leviosa') || phrase.includes('expelliarmus') || phrase.includes('lumos') || phrase.includes('nox') || phrase.includes('stupefy') || phrase.includes('confundo')) {
+                  this.responding.phrase = "Practicing magic is great, but you've got a horcrux to find.";
+            }
+            else {
+                  this.responding.phrase = "I don't understand that.";
+            }
+            break;
+      case 'lake':
+            if (phrase.includes('look')) {
+                  this.responding.phrase = "You are standing next to a large lake.";
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "The tree is a normal tree.";
+                  }
+                  if (phrase.includes('flower')) {
+                    if (pockets.includes('flower')) {
+                      this.responding.phrase = "The flower you picked is very lovely, and it even still has its roots. Perfect if you wanted to start your own garden."
+                    } else {
+                      this.responding.phrase = "There aren't any flowers here.";
+                    }
+                  }
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "The grass is green, but it seems like the whole world is darker while You-Know-Who still lives.";
+                  }
+                  if (phrase.includes('river') || phrase.includes('water') || phrase.includes('lake') || phrase.includes('pond')) {
+                    this.responding.phrase = "The lake looks very calm, but you have a strange feeling that you don't want to go swimming in it.";
+                  }
+                  if (phrase.includes('sky')) {
+                    this.responding.phrase = "No dark marks in the sky. That's always good.";
+                  }
+                  if (phrase.includes('ground')) {
+                    this.responding.phrase = "The ground is mostly covered with grass, but there are some rocks, too.";
+                  }
+                  if (phrase.includes('bush')) {
+                    this.responding.phrase = "You look around in the bush...but alas, no horcruxes.";
+                  }
+                  if (phrase.includes('rock')) {
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "The rock you are carrying is a regular smooth rock. Perfect for defeating evil."
+                    } else {
+                      this.responding.phrase = "There are some larger rocks here, but none that are very interesting.";
+                    }
+                  }
+            }
+            else if (phrase.includes('take')) {
+                  this.responding.phrase = "You don't need it.";
+                  if (phrase.includes('grass')) {
+                    this.responding.phrase = "Why would you carry the grass with you...?";
+                  }
+                  if (phrase.includes('tree')) {
+                    this.responding.phrase = "There's no way you can carry a whole tree, at least not without Hermione's bag."
+                  }
+                  if (phrase.includes('river') || phrase.includes('water') || phrase.includes('lake')) {
+                    this.responding.phrase = "You can't carry the water with you.";
+                  }
+                  if (phrase.includes('rock')){
+                    this.responding.phrase = "You don't want any of these rocks.";
+                  }
+            }
+            else if (phrase.includes('throw')) {
+                  this.responding.phrase = "You can't throw that.";
+                  if (phrase.includes('rock')) {
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "You give the rock a good solid throw and it plunks into the water with a loud splash. You weren't always very good at skipping rocks.";
+                      this.score -= 5;
+                      this.inventory.contents = this.inventory.contents.slice(0, pockets.indexOf('rock')) + this.inventory.contents.slice((pockets.indexOf('rock') + 8));
+                    } else {
+                      this.responding.phrase = "You don't have a rock to throw.";
+                    }
+                  }
+            }
+            else if (phrase.includes('skip')) {
+                  this.responding.phrase = "You can't do that.";
+                  if (phrase.includes('rock')) {
+                    if (pockets.includes('rock')) {
+                      this.responding.phrase = "You skip the rock very skillfully, and suddenly you notice a golden locket lying on the shore next to the lake! You pick it up and immediately feel a weight of evil. You found a horcrux!";
+                      this.score += 5;
+                      this.inventory.contents = this.inventory.contents.slice(0, pockets.indexOf('rock')) + this.inventory.contents.slice((pockets.indexOf('rock') + 8));
+                      this.inventory.contents += "Locket<br>"
+                    } else {
+                      this.responding.phrase = "You don't have a rock to skip.";
+                    }
+                  }
+            }
+            else if (phrase.includes('wingardium leviosa') || phrase.includes('expelliarmus') || phrase.includes('lumos') || phrase.includes('nox') || phrase.includes('stupefy') || phrase.includes('confundo')) {
+                  this.responding.phrase = "Practicing magic is great, but you've got a horcrux to find.";
+            }
+            else {
+                  this.responding.phrase = "I don't understand that.";
+            }
+            break;
       default:
         this.responding.phrase = "You are standing in scene: " + this.state;
+    }
+    if (phrase.includes('destroy') && (phrase.includes('locket') || phrase.includes('horcrux'))) {
+      if (pockets.includes('locket')) {
+        this.responding.phrase = "How would you like to destroy the horcrux?";
+      } else {
+        this.responding.phrase = "You don't have a horcrux";
+      }
     }
 
     $('.dialog').text(this.responding.phrase).show();
