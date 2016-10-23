@@ -144,10 +144,34 @@ section {
 }
 
 .save-game-form {
-  // display: none;
-  position: relative;
+  visibility: hidden;
+  // position: relative;
   top: 20px;
   padding: 5px;
   font-size: 20px;
   background: white;
+  .saveBtn {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    visibility: visible;
+    padding: 15px;
+    font-family: Potter;
+    background: black;
+    color: $hogwarts-gold;
+    font-size: 30px;
+    border: 3px solid $hogwarts-gold;
+    border-radius: $large-radius;
+    cursor: pointer;
+    outline-style: none;
+  }
+}
+
+.current {
+  display: none;
+  position: relative;
+  top: 30px;
+  background: white;
+  font-size: 20px;
+  padding: 5px;
 }
