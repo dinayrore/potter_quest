@@ -1,6 +1,6 @@
 # Harry Potter Quest
 
-Heroku link goes here eventually...
+Heroku link: https://potter-quest.herokuapp.com/
 
 ## Getting Started
 
