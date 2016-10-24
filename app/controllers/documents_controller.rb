@@ -1,9 +1,14 @@
 #
 class DocumentsController < ApplicationController
-  before_action :set_document, only: [:show, :edit, :update]
+  before_action :set_document, only: [:show]
 
   def index
     @documents = Document.all
+    respond_to do |f|
+      f.html # index.html.erb
+      f.xml  { render xml: @users}
+      f.json { render json: @users}
+    end
   end
 
   def show
@@ -21,9 +26,11 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to documents_path }
+        format.html { redirect_to documents_path, notice: 'Document was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @document }
       else
         format.html { render action: 'new' }
+        format.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end
   end

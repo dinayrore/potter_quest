@@ -8,11 +8,12 @@
     .tabs-content
       #signup-tab-content.active
         .signup-form
-        = form_for(@document) do |f|
-          = f.file_field :file
-          = f.submit
-      #login-tab-content.active
+        -# = form_for(@document) do |f|
+        -#   = f.file_field :file
+        -# .actions
+        -#   = f.submit
+      #login-tab-content
         .login-form
-          -# - @documents.each do |document|
-          -#   = document.filename
-          -#   = button_to 'Download', document, method: :get
+        - @documents.each do |document|
+          = document.filename
+          = button_to 'Download', document, method: :get
