@@ -53,7 +53,6 @@ var potterQuest = (function() {
 
     // Check for restored info
     if (parseInt($('.savedTime').text()) > 0 ) {
-      console.log(parseInt($('.savedTime').text()), this.scene);
       this.scene = $('.savedScene').text();
       this.inventory.contents = $('.savedInv').text();
       this.score = parseInt($('.savedScore').text());
@@ -63,14 +62,15 @@ var potterQuest = (function() {
   }
 
   Game.prototype.init = function() {
+    var self = this;
     $(this.elem).css({
       'background-image': 'url(' + backgrounds.initBackground + ')',
       'background-size': '100% 100%'
     });
     this.initEventHandlers(this);
     this.loopHandle = setInterval(function() {
-      if (!game.pause) {
-        game.run();
+      if (!self.pause) {
+        self.run();
       }
     }, this.gameSpeed);
   }
@@ -100,7 +100,7 @@ var potterQuest = (function() {
     });
 
     // If user clicks save button in menu, save the game.
-    $('.game-container').on('click', '.invOption', function() {
+    $('.game-container').on('click', '.save', function() {
       $('.saveBtn').trigger('click');
     });
 
@@ -108,7 +108,7 @@ var potterQuest = (function() {
     $('.game-container').on('click','.invOption', function() {
       self.pause = true;
       self.inventory.show = true;
-      $('.inventory').html("INVENTORY<br><br>" + self.inventory.contents).show();
+      $('.inventory').html(self.inventory.contents).parents('.inventoryContainer').show();
     });
     // Handle key presses
     $('body').keyup(function(event) {
@@ -580,11 +580,19 @@ var potterQuest = (function() {
       default:
         this.responding.phrase = "You are standing in scene: " + this.state;
     }
-    if (phrase.includes('destroy') && (phrase.includes('locket') || phrase.includes('horcrux'))) {
-      if (pockets.includes('locket')) {
-        this.responding.phrase = "How would you like to destroy the horcrux?";
-      } else {
-        this.responding.phrase = "You don't have a horcrux";
+    if ((phrase.includes('destroy') || phrase.includes('hit') || phrase.includes('use')) && (phrase.includes('locket') || phrase.includes('horcrux'))) {
+      this.responding.phrase = "How would you like to do that?";
+      if (!pockets.includes('locket')) {
+        this.responding.phrase = "You don't have a horcrux.";
+      } else if (phrase.includes('sword')) {
+        if (!pockets.includes('sword')) {
+          this.responding.phrase = "You don't have a sword.";
+        } else {
+          this.responding.phrase = "You swing the sword against the locket, and it bursts open with more force than you thought possible. As you try to regain your energy to deal the final blow, you find that you've lost your strength. Try as you might, the locket is too powerful, and your sight slowly goes dim..."
+          this.score += 5;
+          $('.score').text(this.score);
+          this.endGame();
+        }
       }
     }
 
@@ -610,27 +618,42 @@ var potterQuest = (function() {
         }
         else if (key === 13) {
           // Enter
-          if (this.typing.show) {
-            this.typing.show = false;
-            $('.typing').hide();
-            var userPhrase = this.typing.phrase;
-            this.typing.phrase = '';
-            this.checkTyping(userPhrase);
-          } else if (this.responding.show) {
-            this.responding.show = false;
-            $('.dialog').text("Testing").hide();
-          } else if (this.inventory.show) {
-            $('.inventory').hide();
-            this.inventory.show = false;
-          } else if ($('.invOption.active').length === 1) {
-            $('.option.active').removeClass('active');
-            this.inventory.show = true;
-            $('.inventory').html("INVENTORY<br><br>" + this.inventory.contents).show();
-          } else if ($('.save.active').length === 1) {
-            $('.saveBtn').trigger('click');
-          }
-          if (!this.responding.show && !this.inventory.show && $('.active').length === 0) {
-            this.pause = false;
+          if (this.state === 'gameover1') {
+            $('.game-container').css('background','black');
+            $('.character').hide();
+            this.responding.phrase = "As you wake up from your dream, you realize that you've made a huge mistake by leaving Harry and Hermione to find the horcruxes on their own. Suddenly you hear something like Hermione's voice 'Ron...' coming from your deluminator. You reach for it and know what you need to do...";
+            $('.dialog').text(this.responding.phrase).show();
+            this.responding.show = true;
+            this.state = 'gameover2';
+          } else if (this.state === 'gameover2') {
+            this.responding.phrase = "You win! Thanks for playing!";
+            $('.dialog').text(this.responding.phrase);
+            this.state = 'gameover3';
+          } else if (this.state === 'gameover3') {
+            console.log("Game over!");
+          } else {
+            if (this.typing.show) {
+              this.typing.show = false;
+              $('.typing').hide();
+              var userPhrase = this.typing.phrase;
+              this.typing.phrase = '';
+              this.checkTyping(userPhrase);
+            } else if (this.responding.show) {
+              this.responding.show = false;
+              $('.dialog').hide();
+            } else if (this.inventory.show) {
+              $('.inventoryContainer').hide();
+              this.inventory.show = false;
+            } else if ($('.invOption.active').length === 1) {
+              $('.option.active').removeClass('active');
+              this.inventory.show = true;
+              $('.inventory').html(this.inventory.contents).parents('.inventoryContainer').show();
+            } else if ($('.save.active').length === 1) {
+              $('.saveBtn').trigger('click');
+            }
+            if (!this.responding.show && !this.inventory.show && $('.active').length === 0) {
+              this.pause = false;
+            }
           }
         }
         else if (key === 32) {
@@ -663,14 +686,16 @@ var potterQuest = (function() {
             break;
           case 27:
             // Escape
-            if ( $('.option.active').length === 0 ) {
-              $('.fileOption').addClass('active');
-              $('.save').addClass('active');
-              this.pause = true;
-            } else {
-              $('.option.active').removeClass('active');
-              $('.save').removeClass('active');
-              this.pause = false;
+            if (this.state !== 'gameover3') {
+              if ( $('.option.active').length === 0 ) {
+                $('.fileOption').addClass('active');
+                $('.save').addClass('active');
+                this.pause = true;
+              } else {
+                $('.option.active').removeClass('active');
+                $('.save').removeClass('active');
+                this.pause = false;
+              }
             }
             break;
           case 37:
@@ -702,7 +727,7 @@ var potterQuest = (function() {
             if (!this.typing.show && !this.responding.show  && $('.active').length === 0) {
               this.pause = true;
               this.inventory.show = true;
-              $('.inventory').html("INVENTORY<br><br>" + this.inventory.contents).show();
+              $('.inventory').html(this.inventory.contents).parents('.inventoryContainer').show();
               break;
             }
         }
@@ -789,6 +814,18 @@ var potterQuest = (function() {
     var newCharacter = new Character(name, avatar, 350, 300);
     newCharacter.create(this);
     this.characters.push(newCharacter);
+  }
+
+  Game.prototype.endGame = function() {
+    this.pause = true;
+    this.state = 'gameover1';
+  }
+
+  Game.prototype.startGame = function() {
+    /* Create new game */
+    var game;
+    game = new Game();
+    game.init();
   }
 
   /* Character Constructor and Methods */
@@ -901,14 +938,11 @@ var potterQuest = (function() {
     });
   }
 
-  /* Create new game */
-  var game;
-  game = new Game();
-  game.init();
-
 
   return {
-    game: game
+    newGame: Game.prototype.startGame
   }
 
 })();
+
+potterQuest.newGame();

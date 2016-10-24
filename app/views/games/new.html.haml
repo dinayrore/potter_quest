@@ -20,12 +20,14 @@
             %li.scoreOption.option
               Score:
               %span.score 0
-              &nbsp;of 20
+              &nbsp;of 30
             %li.timeOption.option Time:
         %button(class='startBtn') Play Game
         .typing
         .dialog Answer
-        .inventory
+        .inventoryContainer
+          .inventoryTitle Inventory<br><br>
+          .inventory
       .save-game-form
         =form_for(@game) do |f|
           =f.text_field :user_id, class: "saveUserId", value: session[:user_id]
