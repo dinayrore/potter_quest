@@ -1,12 +1,17 @@
 Rails.application.routes.draw do
   root 'users#new' # login/signup
 
-  get  '/leaderboard', to: 'pages#leaderboard' # leaderboard (static)
-  # get  '/game', to: 'pages#game' # game page (static)
-  get  '/game', to: 'games#new' # game page (static)
-  # post '/games', to: 'games#create'
-
   post '/signup', to: 'users#create' # creates a user
+
+  get  '/leaderboard', to: 'pages#leaderboard' # leaderboard (static)
+
+  get  '/game', to: 'games#new' # game page
+  post '/game', to: 'games#create'
+
+  # get '/document', to: redirect('/documents')
+  get '/document', to: 'documents#new'
+  get'/documents', to: 'documents#show'
+  post '/document', to: 'documents#create'
 
   get    '/login',   to: 'sessions#new' # login page for a specific user
   post   '/login',   to: 'sessions#create' # create new session
@@ -14,4 +19,5 @@ Rails.application.routes.draw do
 
   resources :users
   resources :games
+  resources :documents
 end

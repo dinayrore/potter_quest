@@ -1,0 +1,18 @@
+%section#login-page
+  .form-wrap
+    .tabs
+      %h3.signup-tab
+        %a.active{:id =>"signup-tab-content"} Add Content
+      %h3.login-tab
+        %a{:id => "login-tab-content"} View Content
+    .tabs-content
+      #signup-tab-content.active
+        .signup-form
+        = form_for(@document) do |f|
+          = f.file_field :file
+          = f.submit
+      #login-tab-content.active
+        .login-form
+          -# - @documents.each do |document|
+          -#   = document.filename
+          -#   = button_to 'Download', document, method: :get

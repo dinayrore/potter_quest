@@ -3,8 +3,7 @@
     %li.option= link_to "Profile", current_user
     %li.option= link_to "Game", game_path
     %li.option= link_to "Leaderboard", leaderboard_path
-    %li.option
-      %a Contribute
+    %li.option= link_to "Contribute", new_document_path
     %li.option= link_to "Logout", logout_path, method: :delete
     %li.show-hide
       .nav-icon
