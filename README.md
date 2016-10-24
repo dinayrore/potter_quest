@@ -71,3 +71,7 @@ Please complete the following procedure to run the program on a live system:
 ## Acknowledgments
 
 * The Iron Yard - Durham
+
+* Michael Hartl - RUBY ON RAILS TUTORIAL (RAILS 5)
+
+* Ryan Endacott - Rails File Upload Example
