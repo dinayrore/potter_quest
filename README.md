@@ -68,7 +68,7 @@ Please complete the following procedure to run the program on a live system:
 ## Built With
 
 * Atom
-* Utilizes: Posgresql DB
+* Utilizes: Postgresql DB
 
 ## Authors
 
